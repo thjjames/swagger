@@ -18,18 +18,18 @@ Vue.prototype.$swagger = swagger
 this.$get('/request').then(res => {})
 ```
 
-### API
+### 方法
 
 #### create(创建新实例 see http://www.axios-js.com/zh-cn/docs/#)
 ```js
-const api = SwaggerApi.create({
+const swagger = SwaggerApi.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
 })
 ```
 
 #### use(使用扩展模块)
 ```js
-api.use(module, options)
+swagger.use(module, options)
 ```
 
 ### module
@@ -37,7 +37,7 @@ api.use(module, options)
 #### refreshTokenModule
 ```js
 import { RefreshTokenModule } from '@longfor/swagger'
-api.use(RefreshTokenModule, {
+swagger.use(RefreshTokenModule, {
   unauthorizedCode: 401,
   getRefreshToken() {}
 })
@@ -47,12 +47,12 @@ api.use(RefreshTokenModule, {
 | --- | --- | --- | --- |
 | unauthorizedCode | 未授权码 | _string_ | `401` |
 | maxTryTimes | 最大重试次数 | _string_ | `1` |
-| getRefreshToken | 获取新token方法 | _function<Promise>_ | `内置业务获取方法` |
+| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务获取方法` |
 
 #### loadingModule
 ```js
 import { LoadingModule } from '@longfor/swagger'
-api.use(LoadingModule, {
+swagger.use(LoadingModule, {
   isShowLoading: true,
   showLoading() {},
   hideLoading() {}
@@ -68,7 +68,7 @@ api.use(LoadingModule, {
 #### errorModule
 ```js
 import { ErrorModule } from '@longfor/swagger'
-api.use(ErrorModule, {
+swagger.use(ErrorModule, {
   unauthorizedCode: 401,
   unauthorizedHandler() {}
 })
