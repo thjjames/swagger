@@ -1,0 +1,40 @@
+{
+  "name": "@longfor/swagger",
+  "version": "1.0.0",
+  "author": "tianhaojun(James) <thjjames@163.com>",
+  "keywords": [
+    "XMLHttpRequest",
+    "XHR",
+    "axios",
+    "api"
+  ],
+  "description": "通用swagger-api请求库 基于axios扩展",
+  "license": "ISC",
+  "main": "dist/swagger.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "NODE_ENV=dev webpack-dev-server",
+    "build": "NODE_ENV=prod webpack",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^0.23.0",
+    "lodash.merge": "^4.6.2",
+    "qs": "^6.10.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.15.8",
+    "@babel/plugin-proposal-class-properties": "7.14.5",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
+    "@babel/plugin-transform-runtime": "7.15.8",
+    "@babel/preset-env": "7.15.8",
+    "@babel/runtime-corejs3": "^7.15.4",
+    "babel-loader": "8.2.3",
+    "html-webpack-plugin": "^4.5.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
