@@ -29,11 +29,16 @@ class SwaggerApi extends axios.Axios {
     return new SwaggerApi(merge(defaultConfig, instanceConfig));
   };
 
+  // Expose Module
+  static RefreshTokenModule = RefreshTokenModule;
+  static LoadingModule = LoadingModule;
+  static ErrorModule = ErrorModule;
+
   // Expose Cancel & CancelToken
   static Cancel = import('axios/lib/cancel/Cancel');
   static CancelToken = import('axios/lib/cancel/CancelToken');
   static isCancel = import('axios/lib/cancel/isCancel');
 };
 
-export { RefreshTokenModule, LoadingModule, ErrorModule };
+// export { SwaggerApi, RefreshTokenModule, LoadingModule, ErrorModule };
 export default SwaggerApi;
