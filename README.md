@@ -10,8 +10,8 @@ npm i -S @longfor/swagger
 ```js
 import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from '@longfor/swagger'
 
-const swagger = new SwaggerApi({
-  baseURL: 'https://getman.cn/api' // 请求基本域名
+const swagger = new SwaggerApi({ // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
+  baseURL: 'https://getman.cn/api'
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
 Vue.prototype.$swagger = swagger
