@@ -40,5 +40,5 @@ class SwaggerApi extends axios.Axios {
   static isCancel = import('axios/lib/cancel/isCancel');
 };
 
-// export { SwaggerApi, RefreshTokenModule, LoadingModule, ErrorModule };
+export { RefreshTokenModule, LoadingModule, ErrorModule };
 export default SwaggerApi;
