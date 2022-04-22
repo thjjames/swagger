@@ -5,7 +5,7 @@ import { noop, registerModule } from './utils';
  * @param noPermissionCode 无权限码: 默认403
  * @param unauthorizedHandler 未授权处理方法 使用此方法时需要将RefreshTokenModule执行在ErrorModule之前
  * @param noPermissionHandler 无权限处理方法
- * @param toastInstance toast提示实例方法 若不存在则由业务自行处理
+ * @param toastHandler toast提示实例方法 若不存在则由业务自行处理
  */
 const ErrorModule = function(options = {}) {
   registerModule.call(this, 'ErrorModule');
@@ -13,7 +13,7 @@ const ErrorModule = function(options = {}) {
   const noPermissionCode = options.noPermissionCode || 403;
   const unauthorizedHandler = options.unauthorizedHandler || noop;
   const noPermissionHandler = options.noPermissionHandler || noop;
-  const toastInstance = options.toastInstance;
+  const toastHandler = options.toastHandler;
   this.interceptors.response.use(response => {
     // 根据后端返回来处理
     const { code, message } = response.data;
@@ -27,7 +27,7 @@ const ErrorModule = function(options = {}) {
         // 无权限 noPermissionHandler
         noPermissionHandler();
       }
-      toastInstance && toastInstance(message);
+      toastHandler && toastHandler(message);
       response.message = message;
       return Promise.reject(response);
     }
@@ -37,7 +37,7 @@ const ErrorModule = function(options = {}) {
       // RefreshTokenModule需要注册在前 失败后执行授权失败回调
       unauthorizedHandler();
     }
-    toastInstance && toastInstance(error.message);
+    toastHandler && toastHandler(error.message);
     return Promise.reject(error);
   });
 

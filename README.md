@@ -1,14 +1,20 @@
 # SWAGGER-API
-通用swagger-api请求库 基于axios扩展
+通用swagger-api请求库 基于axios扩展  
+![](https://github.com/thjjames/swagger-api/blob/master/swagger-api.png?raw=true)
 
 ## 使用说明
 ```bash
-npm i -S @longfor/swagger
+npm i -S @github.com:thjjames/swagger-api
+```
+或  
+`package.json`中添加如下
+```
+"swagger-api": "git@github.com:thjjames/swagger-api"
 ```
 
 ## 基础用法
 ```js
-import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from '@longfor/swagger'
+import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from 'swagger-api'
 
 const swagger = new SwaggerApi({ // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
   baseURL: 'https://getman.cn/api'
@@ -36,7 +42,7 @@ swagger.use(module, options)
 
 #### refreshTokenModule
 ```js
-import { RefreshTokenModule } from '@longfor/swagger'
+import { RefreshTokenModule } from 'swagger-api'
 swagger.use(RefreshTokenModule, {
   unauthorizedCode: 401,
   getRefreshToken() {}
@@ -51,23 +57,23 @@ swagger.use(RefreshTokenModule, {
 
 #### loadingModule
 ```js
-import { LoadingModule } from '@longfor/swagger'
+import { LoadingModule } from 'swagger-api'
 swagger.use(LoadingModule, {
   isShowLoading: true,
-  showLoading() {},
-  hideLoading() {}
+  showLoadingHandler() {},
+  hideLoadingHandler() {}
 })
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以通过request.config设置单个请求 | _boolean_ | `false` |
-| showLoading | 展示加载方法 | _function_ | - |
-| hideLoading | 隐藏加载方法 | _function_ | - |
+| showLoadingHandler | 展示加载方法 | _function_ | - |
+| hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
 #### errorModule
 ```js
-import { ErrorModule } from '@longfor/swagger'
+import { ErrorModule } from 'swagger-api'
 swagger.use(ErrorModule, {
   unauthorizedCode: 401,
   unauthorizedHandler() {}
@@ -80,7 +86,34 @@ swagger.use(ErrorModule, {
 | noPermissionCode | 无权限码 | _string_ | `403` |
 | unauthorizedHandler | 未授权处理方法，当ErrorModule注册在RefreshTokenModule之前时无效 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
-| toastInstance | 提示实例方法，可以不传，由业务触发 | _function_ | - |
+| toastHandler | 提示实例方法，可以不传，由业务触发 | _function_ | - |
+
+## 语法糖
+axios正常返回数据格式为
+```js
+{
+  config: {},
+  data: {
+    code: 200,
+    message: '',
+    data: {}
+  },
+  headers: {},
+  message: '',
+  request: {},
+  status: 200,
+  statusText: 'OK'
+}
+```
+语法糖可以帮助直接返回最里层data数据
+### $get
+```js
+this.$swagger.$get(url, config)
+```
+### $post
+```js
+this.$swagger.$post(url, data, config)
+```
 
 ## contributor
 tianhaojun <thjjames@163.com>

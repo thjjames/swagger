@@ -16,7 +16,7 @@ class SwaggerApi extends axios.Axios {
   use(module, options) {
     return module.call(this, options);
   }
-  // Grammar Sugar
+  // Syntactic Sugar
   $get(url, config) {
     return this.get(url, config).then(res => res?.data?.data);
   }
@@ -40,5 +40,5 @@ class SwaggerApi extends axios.Axios {
   static isCancel = import('axios/lib/cancel/isCancel');
 };
 
-export { RefreshTokenModule, LoadingModule, ErrorModule };
+export { RefreshTokenModule, LoadingModule, ErrorModule }; // not effective for build, only for local test
 export default SwaggerApi;

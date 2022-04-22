@@ -2,18 +2,18 @@ import { noop, registerModule } from './utils';
 
 /**
  * @param isShowLoading 全局变量: 是否显示加载状态
- * @param showLoading 展示加载方法
- * @param hideLoading 隐藏加载方法
+ * @param showLoadingHandler 展示加载方法
+ * @param hideLoadingHandler 隐藏加载方法
  */
 const LoadingModule = function(options = {}) {
   registerModule.call(this, 'LoadingModule');
-  const { isShowLoading, showLoading = noop, hideLoading = noop } = options;
+  const { isShowLoading, showLoadingHandler = noop, hideLoadingHandler = noop } = options;
 
   // 正在展示loading的请求数
   let loadingCount = 0;
   const tryShowLoading = () => {
     if (loadingCount === 0) {
-      showLoading();
+      showLoadingHandler();
     }
     loadingCount++;
   };
@@ -24,7 +24,7 @@ const LoadingModule = function(options = {}) {
 
     loadingCount--;
     if (loadingCount === 0) {
-      hideLoading();
+      hideLoadingHandler();
     }
   };
 
