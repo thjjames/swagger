@@ -31,6 +31,10 @@ module.exports = {
     extensions: ['.js']
   },
   devtool: isDev && 'eval-source-map',
+  externals: isDev && {
+    'vue': 'Vue',
+    'element-ui': 'ELEMENT'
+  },
   devServer: {
     historyApiFallback: true,
     host: '0.0.0.0',

@@ -1,25 +1,54 @@
+import Vue from 'vue';
+import { Message, Loading } from 'element-ui';
 import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from '../src';
 
-const instance = SwaggerApi.create({
+const swagger = SwaggerApi.create({
   baseURL: '/api'
 });
-instance.use(RefreshTokenModule).use(LoadingModule).use(ErrorModule, {
+let loadingInstance = {}
+swagger.use(RefreshTokenModule).use(LoadingModule, {
+  isShowLoading: true,
+  showLoadingHandler: () => {
+    loadingInstance = Loading.service();
+  },
+  hideLoadingHandler: () => {
+    loadingInstance.close();
+  }
+}).use(ErrorModule, {
   codeKey: 'status',
-  codeValue: 0
+  codeValue: 0,
+  toastHandler: Message.error
 });
 
-document.getElementById('get').addEventListener('click', () => {
-  instance.$get('/request').then(res => {
-    console.log('res1', res);
-  }).catch(err => {
-    console.log('err1', err);
-  });
-  instance.$get('/request?query=1').then(res => {
-    console.log('res2', res);
-  }).catch(err => {
-    console.log('err2', err);
-  });
-});
-document.getElementById('post').addEventListener('click', () => {
-  instance.$post('/request', { method: 'POST', url: 'https://getman.cn/echo' });
+new Vue({
+  el: '#app',
+  methods: {
+    get() {
+      swagger.$get('/request');
+    },
+    post() {
+      swagger.$post('/request', {
+        method: 'POST',
+        url: 'https://getman.cn/echo'
+      });
+    },
+    getMulti() {
+      swagger.$get('/request').then(res => {
+        console.log('res1', res);
+      }).catch(err => {
+        console.log('err1', err);
+      });
+      swagger.$get('/request?query=1').then(res => {
+        console.log('res2', res);
+      }).catch(err => {
+        console.log('err2', err);
+      });
+    },
+    postFail() {
+      swagger.$post('/request', {
+        method: 'POST',
+        url: ''
+      });
+    }
+  }
 });
