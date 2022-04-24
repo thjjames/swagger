@@ -1,6 +1,8 @@
 import { noop, registerModule } from './utils';
 
 /**
+ * @param codeKey 返回数据code键名: 默认'code'
+ * @param codeValue 返回数据code键成功值: 默认200
  * @param unauthorizedCode 未授权码: 默认401
  * @param noPermissionCode 无权限码: 默认403
  * @param unauthorizedHandler 未授权处理方法 使用此方法时需要将RefreshTokenModule执行在ErrorModule之前
@@ -9,6 +11,8 @@ import { noop, registerModule } from './utils';
  */
 const ErrorModule = function(options = {}) {
   registerModule.call(this, 'ErrorModule');
+  const codeKey = options.codeKey || 'code';
+  const codeValue = Object.prototype.toString.call(options.codeValue) === '[object Number]' ? options.codeValue : 200; // fix value 0
   const unauthorizedCode = options.unauthorizedCode || 401;
   const noPermissionCode = options.noPermissionCode || 403;
   const unauthorizedHandler = options.unauthorizedHandler || noop;
@@ -16,12 +20,13 @@ const ErrorModule = function(options = {}) {
   const toastHandler = options.toastHandler;
   this.interceptors.response.use(response => {
     // 根据后端返回来处理
-    const { code, message } = response.data;
-    if (code === 200) {
+    const code = response.data[codeKey];
+    const message = response.data.message;
+    if (code === codeValue) {
       return response;
     } else {
-      if (code === unauthorizedCode && !this.defaults._moduleList.includes('RefreshTokenModule')) {
-        // 授权失败 unauthorizedHandler 不存在刷新token机制时才执行回调
+      if (code === unauthorizedCode) {
+        // 授权失败 unauthorizedHandler
         unauthorizedHandler();
       } else if (code === noPermissionCode) {
         // 无权限 noPermissionHandler
@@ -33,10 +38,6 @@ const ErrorModule = function(options = {}) {
     }
   }, error => {
     // 请求失败处理 axios.enhanceError
-    if (error.code === unauthorizedCode) {
-      // RefreshTokenModule需要注册在前 失败后执行授权失败回调
-      unauthorizedHandler();
-    }
     toastHandler && toastHandler(error.message);
     return Promise.reject(error);
   });

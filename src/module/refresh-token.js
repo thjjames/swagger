@@ -2,16 +2,19 @@ import qs from 'qs';
 import { registerModule } from './utils';
 
 /**
+ * @param codeKey 返回数据code键名: 默认'code'
  * @param unauthorizedCode 未授权码: 默认401
  * @param maxTryTimes 最大重试次数
  * @param getRefreshToken 获取新token方法
  */
 const RefreshTokenModule = function(options = {}) {
   registerModule.call(this, 'RefreshTokenModule');
+  const codeKey = options.codeKey || 'code';
   const unauthorizedCode = options.unauthorizedCode || 401;
   const maxTryTimes = options.maxTryTimes || 1;
   const getRefreshToken = options.getRefreshToken || (async () => {
-    const isInApp = navigator.userAgent.includes('longfor');
+    const ua = navigator.userAgent;
+    const isInApp = ua.includes('iPhone') || ua.includes('Android');
     let token;
     if (isInApp) {
       token = await $native.getToken().catch(() => {});
@@ -25,15 +28,15 @@ const RefreshTokenModule = function(options = {}) {
   let isRefreshingToken = false;
   // 并发请求栈
   let concurrentRequestStack = [];
-  // 拦截器中通用代码 @param => response in then | error in catch
-  const refreshTokenHandler = async param => {
+  // 拦截器中通用代码
+  const refreshTokenHandler = async response => {
     // 超过最大重试次数 抛出异常 避免死循环
-    const config = param.config;
+    const { config } = response;
     if (config._tryTimes === undefined) {
       config._tryTimes = 0;
     }
     config._tryTimes++;
-    if (config._tryTimes > maxTryTimes) return Promise.reject(param);
+    if (config._tryTimes > maxTryTimes) return Promise.resolve(response);
 
     if (isRefreshingToken) {
       // 这里需要返回Promise链来保证栈里请求执行后完成闭环！
@@ -50,7 +53,9 @@ const RefreshTokenModule = function(options = {}) {
       isRefreshingToken = false;
       if (!token) {
         // 获取新token失败 直接抛出原异常
-        return Promise.reject(param);
+        // Q: 关于这里为什么用resolve而非reject？
+        // A: RefreshTokenModule只是单纯的重试机制模块 并不改变成功或失败状态 保证Promise链还是fulfilled 也方便后续ErrorModule统一判断
+        return Promise.resolve(response);
       } else {
         // update current request & instance's header's Authorization info
         config.headers.Authorization = `Bearer ${token}`;
@@ -70,19 +75,8 @@ const RefreshTokenModule = function(options = {}) {
   };
 
   this.interceptors.response.use(response => {
-    // 执行顺序早于ErrorModule的情况
-    if (response.data.code !== unauthorizedCode) return response;
-
-    // complement code & message if rejected
-    response.code = unauthorizedCode;
-    response.message = response.data.message;
-
+    if (response.data[codeKey] !== unauthorizedCode) return response;
     return refreshTokenHandler(response);
-  }, error => {
-    // 非授权失败错误 直接抛出原异常
-    // if (error.code !== unauthorizedCode) return Promise.reject(error);
-
-    return refreshTokenHandler(error);
   });
 
   return this;

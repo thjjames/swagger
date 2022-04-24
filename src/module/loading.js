@@ -42,7 +42,7 @@ const LoadingModule = function(options = {}) {
 
   this.interceptors.response.use(response => {
     if (isShowLoading || response.config?.isShowLoading) {
-      tryShowLoading();
+      tryHideLoading();
     }
     return response;
   }, error => {

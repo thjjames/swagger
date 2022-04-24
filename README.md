@@ -1,5 +1,5 @@
 # SWAGGER-API
-通用swagger-api请求库 基于axios扩展  
+通用swagger-api请求库 基于axios扩展 使用此库后可以不用安装axios  
 ![](https://github.com/thjjames/swagger-api/blob/master/swagger-api.png?raw=true)
 
 ## 使用说明
@@ -7,7 +7,7 @@
 npm i -S @github.com:thjjames/swagger-api
 ```
 或  
-`package.json`中添加如下
+`package.json`中`dependencies`添加
 ```
 "swagger-api": "git@github.com:thjjames/swagger-api"
 ```
@@ -21,7 +21,7 @@ const swagger = new SwaggerApi({ // SwaggerApi.create suggested but not new keyw
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
 Vue.prototype.$swagger = swagger
-this.$get('/request').then(res => {})
+this.$swagger.$get('/request').then(res => {})
 ```
 
 ### 方法
@@ -38,7 +38,7 @@ const swagger = SwaggerApi.create({
 swagger.use(module, options)
 ```
 
-### module
+### 扩展模块
 
 #### refreshTokenModule
 ```js
@@ -51,9 +51,10 @@ swagger.use(RefreshTokenModule, {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| unauthorizedCode | 未授权码 | _string_ | `401` |
-| maxTryTimes | 最大重试次数 | _string_ | `1` |
-| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务获取方法` |
+| codeKey | 后端返回data数据中code键名 | _string_ | `code` |
+| unauthorizedCode | 未授权码 | _number_ | `401` |
+| maxTryTimes | 最大重试次数 | _number_ | `1` |
+| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务获取token方法` |
 
 #### loadingModule
 ```js
@@ -72,6 +73,7 @@ swagger.use(LoadingModule, {
 | hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
 #### errorModule
+> Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
 ```js
 import { ErrorModule } from 'swagger-api'
 swagger.use(ErrorModule, {
@@ -82,8 +84,10 @@ swagger.use(ErrorModule, {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| unauthorizedCode | 未授权码 | _string_ | `401` |
-| noPermissionCode | 无权限码 | _string_ | `403` |
+| codeKey | 后端返回data数据中code键名 | _string_ | `code` |
+| codeValue | 后端返回data数据中code成功值 | _number_ | `200` |
+| unauthorizedCode | 未授权码 | _number_ | `401` |
+| noPermissionCode | 无权限码 | _number_ | `403` |
 | unauthorizedHandler | 未授权处理方法，当ErrorModule注册在RefreshTokenModule之前时无效 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以不传，由业务触发 | _function_ | - |

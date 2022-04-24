@@ -3,7 +3,10 @@ import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from '../s
 const instance = SwaggerApi.create({
   baseURL: '/api'
 });
-instance.use(RefreshTokenModule).use(LoadingModule).use(ErrorModule);
+instance.use(RefreshTokenModule).use(LoadingModule).use(ErrorModule, {
+  codeKey: 'status',
+  codeValue: 0
+});
 
 document.getElementById('get').addEventListener('click', () => {
   instance.$get('/request').then(res => {
