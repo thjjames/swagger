@@ -16,7 +16,7 @@ swagger.use(RefreshTokenModule).use(LoadingModule, {
   }
 }).use(ErrorModule, {
   codeKey: 'status',
-  codeValue: 0,
+  successfulCode: 0,
   toastHandler: Message.error
 });
 

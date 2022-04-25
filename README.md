@@ -85,7 +85,7 @@ swagger.use(ErrorModule, {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | codeKey | 后端返回data数据中code键名 | _string_ | `code` |
-| codeValue | 后端返回data数据中code成功值 | _number_ | `200` |
+| successfulCode | 成功码 | _number_ | `200` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | noPermissionCode | 无权限码 | _number_ | `403` |
 | unauthorizedHandler | 未授权处理方法 | _function_ | - |
