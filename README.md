@@ -54,7 +54,7 @@ swagger.use(RefreshTokenModule, {
 | codeKey | 后端返回data数据中code键名 | _string_ | `code` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | maxTryTimes | 最大重试次数 | _number_ | `1` |
-| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务获取token方法` |
+| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务方法，一般不通用需要根据实际业务传入` |
 
 #### loadingModule
 ```js
@@ -88,9 +88,9 @@ swagger.use(ErrorModule, {
 | codeValue | 后端返回data数据中code成功值 | _number_ | `200` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | noPermissionCode | 无权限码 | _number_ | `403` |
-| unauthorizedHandler | 未授权处理方法，当ErrorModule注册在RefreshTokenModule之前时无效 | _function_ | - |
+| unauthorizedHandler | 未授权处理方法 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
-| toastHandler | 提示实例方法，可以不传，由业务触发 | _function_ | - |
+| toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
 ## 语法糖
 axios正常返回数据格式为
