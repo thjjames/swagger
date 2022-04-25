@@ -16,7 +16,7 @@ npm i -S @github.com:thjjames/swagger-api
 ```js
 import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from 'swagger-api'
 
-const swagger = new SwaggerApi({ // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
+const swagger = SwaggerApi.create({ // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
   baseURL: 'https://getman.cn/api'
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
@@ -26,7 +26,7 @@ this.$swagger.$get('/request').then(res => {})
 
 ### 方法
 
-#### create(创建新实例 see http://www.axios-js.com/zh-cn/docs/#)
+#### create(创建新实例 see http://www.axios-js.com/zh-cn/docs/#axios-create-config)
 ```js
 const swagger = SwaggerApi.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
