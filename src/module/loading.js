@@ -9,6 +9,11 @@ const LoadingModule = function(options = {}) {
   registerModule.call(this, 'LoadingModule');
   const { isShowLoading, showLoadingHandler = noop, hideLoadingHandler = noop } = options;
 
+  const getShowLoading = config => {
+    if (config?.isShowLoading !== void 0) return config.isShowLoading;
+    return isShowLoading;
+  };
+
   // 正在展示loading的请求数
   let loadingCount = 0;
   const tryShowLoading = () => {
@@ -29,24 +34,24 @@ const LoadingModule = function(options = {}) {
   };
 
   this.interceptors.request.use(config => {
-    if (isShowLoading || config.isShowLoading) {
+    if (getShowLoading(config)) {
       tryShowLoading();
     }
     return config;
   }, error => {
-    if (isShowLoading || error.config?.isShowLoading) {
+    if (getShowLoading(error.config)) {
       tryHideLoading();
     }
     return Promise.reject(error);
   });
 
   this.interceptors.response.use(response => {
-    if (isShowLoading || response.config?.isShowLoading) {
+    if (getShowLoading(response.config)) {
       tryHideLoading();
     }
     return response;
   }, error => {
-    if (isShowLoading || error.config?.isShowLoading) {
+    if (getShowLoading(error.config)) {
       tryHideLoading();
     }
     return Promise.reject(error);
