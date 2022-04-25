@@ -123,4 +123,4 @@ this.$swagger.$post(url, data, config)
 tianhaojun <thjjames@163.com>
 
 ## feadback
-please create issues on https://github.com/thjjames or send an email on <thjjames@163.com>
+please create issues on https://github.com/thjjames/swagger-api/issues or send an email on <thjjames@163.com>
