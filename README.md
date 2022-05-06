@@ -120,8 +120,7 @@ this.$swagger.$post(url, data, config)
 ```
 
 ## contributor
-- [James Tian](<https://github.com/thjjames>) <thjjames@163.com>
-<img width="64" src="https://avatars1.githubusercontent.com/u/8946788?s=400&u=74db1b1c5254cc5980c851f6625f445f73cb0a19&v=4" />
+[James Tian](<https://github.com/thjjames>) <img width="32" src="https://avatars1.githubusercontent.com/u/8946788?s=400&u=74db1b1c5254cc5980c851f6625f445f73cb0a19&v=4" />
 
 ## feadback
 please create issues on https://github.com/thjjames/swagger-api/issues or send an email on <thjjames@163.com>
