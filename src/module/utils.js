@@ -7,3 +7,12 @@ export function registerModule(moduleName) {
   }
   this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
 };
+
+const _toString = Object.prototype.toString;
+const isType = function(type) {
+  return function(obj) {
+    return _toString.call(obj) === `[object ${type}]`;
+  }
+}
+export const isNumber = isType('Number');
+export const isObject = isType('Object');

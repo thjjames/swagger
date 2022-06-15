@@ -1,4 +1,4 @@
-import { noop, registerModule } from './utils';
+import { noop, registerModule, isNumber, isObject } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'
@@ -12,7 +12,7 @@ import { noop, registerModule } from './utils';
 const ErrorModule = function(options = {}) {
   registerModule.call(this, 'ErrorModule');
   const codeKey = options.codeKey || 'code';
-  const successfulCode = Object.prototype.toString.call(options.successfulCode) === '[object Number]' ? options.successfulCode : 200; // fix value 0
+  const successfulCode = isNumber(options.successfulCode) ? options.successfulCode : 200; // fix value 0
   const unauthorizedCode = options.unauthorizedCode || 401;
   const noPermissionCode = options.noPermissionCode || 403;
   const unauthorizedHandler = options.unauthorizedHandler || noop;
@@ -20,9 +20,11 @@ const ErrorModule = function(options = {}) {
   const toastHandler = options.toastHandler;
   this.interceptors.response.use(response => {
     // 根据后端返回来处理
-    const code = response.data[codeKey];
-    const message = response.data.message;
-    if (code === successfulCode) {
+    const data = response.data;
+    const code = data[codeKey];
+    const message = data.message;
+    // 兼容data为blob等文件格式
+    if (code === successfulCode || !isObject(data)) {
       return response;
     } else {
       if (code === unauthorizedCode) {

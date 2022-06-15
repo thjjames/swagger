@@ -17,10 +17,20 @@
 
 <body>
   <div id="app">
-    <el-button plain @click="get">get</el-button>
-    <el-button plain @click="post">post</el-button>
-    <el-button type="primary" plain @click="getMulti">get multi</el-button>
-    <el-button type="danger" plain @click="postFail">post fail</el-button>
+    <div>
+      <el-button plain @click="get">get</el-button>
+      <el-button plain @click="post">post</el-button>
+      <el-button type="danger" plain @click="postFail">post fail</el-button>
+    </div>
+    <div style="margin-top: 16px;">
+      <el-button plain @click="$get">$get</el-button>
+      <el-button plain @click="$post">$post</el-button>
+      <el-button type="danger" plain @click="$postFail">$post fail</el-button>
+    </div>
+    <div style="margin-top: 16px;">
+      <el-button type="primary" plain @click="asyncMulti">async multi</el-button>
+      <el-button type="primary" plain @click="syncMulti">sync multi</el-button>
+    </div>
   </div>
 </body>
 </html>
