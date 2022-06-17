@@ -2,11 +2,12 @@ import axios from 'axios';
 import merge from 'lodash.merge';
 import defaultConfig from 'axios/lib/defaults';
 import { RefreshTokenModule, LoadingModule, ErrorModule } from './module';
+import { isObject } from './module/utils';
 
 class SwaggerApi extends axios.Axios {
-  constructor() {
-    super(...arguments);
-  }
+  // constructor() {
+  //   super(...arguments);
+  // }
 
   /**
    * use extend module
@@ -16,12 +17,16 @@ class SwaggerApi extends axios.Axios {
   use(module, options) {
     return module.call(this, options);
   }
+
   // Syntactic Sugar
   $get(url, config) {
-    return this.get(url, config).then(res => res?.data?.data);
+    return this.get(url, config).then(res => this.getInnerData(res));
   }
   $post(url, data, config) {
-    return this.post(url, data, config).then(res => res?.data?.data);
+    return this.post(url, data, config).then(res => this.getInnerData(res));
+  }
+  getInnerData(res) {
+    return isObject(res.data) ? res.data.data : res.data
   }
 
   // Factory for creating new instances
@@ -35,9 +40,9 @@ class SwaggerApi extends axios.Axios {
   static ErrorModule = ErrorModule;
 
   // Expose Cancel & CancelToken
-  static Cancel = import('axios/lib/cancel/Cancel');
-  static CancelToken = import('axios/lib/cancel/CancelToken');
-  static isCancel = import('axios/lib/cancel/isCancel');
+  static Cancel = axios.Cancel;
+  static CancelToken = axios.CancelToken;
+  static isCancel = axios.isCancel;
 };
 
 export { RefreshTokenModule, LoadingModule, ErrorModule }; // not effective for build, only for local test
