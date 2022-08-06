@@ -4,6 +4,10 @@ import defaultConfig from 'axios/lib/defaults';
 import { RefreshTokenModule, LoadingModule, ErrorModule } from './module';
 import { isObject } from './module/utils';
 
+const getInnerData = res => {
+  return isObject(res.data) ? res.data.data : res.data;
+};
+
 class SwaggerApi extends axios.Axios {
   // constructor() {
   //   super(...arguments);
@@ -20,13 +24,10 @@ class SwaggerApi extends axios.Axios {
 
   // Syntactic Sugar
   $get(url, config) {
-    return this.get(url, config).then(res => this.getInnerData(res));
+    return this.get(url, config).then(res => getInnerData(res));
   }
   $post(url, data, config) {
-    return this.post(url, data, config).then(res => this.getInnerData(res));
-  }
-  getInnerData(res) {
-    return isObject(res.data) ? res.data.data : res.data
+    return this.post(url, data, config).then(res => getInnerData(res));
   }
 
   // Factory for creating new instances
