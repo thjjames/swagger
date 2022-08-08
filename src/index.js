@@ -32,7 +32,7 @@ class SwaggerApi extends axios.Axios {
 
   // Factory for creating new instances
   static create = function(instanceConfig) {
-    return new SwaggerApi(merge(defaultConfig, instanceConfig));
+    return new SwaggerApi(merge({ ...defaultConfig }, instanceConfig));
 
     // compatible with usage axios(config)
     // const context = new SwaggerApi(merge(defaultConfig, instanceConfig));

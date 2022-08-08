@@ -16,7 +16,8 @@ npm i -S @github.com:thjjames/swagger-api
 ```js
 import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from 'swagger-api'
 
-const swagger = SwaggerApi.create({ // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
+// SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
+const swagger = SwaggerApi.create({
   baseURL: 'https://getman.cn/api'
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
@@ -26,7 +27,11 @@ this.$swagger.$get('/request').then(res => {})
 
 ### 方法
 
-#### create(创建新实例 see <a href="http://www.axios-js.com/zh-cn/docs/#axios-create-config" target="_blank">http://www.axios-js.com/zh-cn/docs/#axios-create-config</a>)
+#### create(创建新实例)
+> 所有实例均由静态方法create生成，这里舍弃了`axios(config)`的写法
+
+> 参考 http://www.axios-js.com/zh-cn/docs/#axios-create-config
+
 ```js
 const swagger = SwaggerApi.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
@@ -93,7 +98,7 @@ swagger.use(ErrorModule, {
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
 ## 请求配置
-(see <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>)
+> 参考 <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
