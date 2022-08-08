@@ -20,9 +20,10 @@ const ErrorModule = function(options = {}) {
   const toastHandler = options.toastHandler;
   this.interceptors.response.use(response => {
     // 根据后端返回来处理
-    const data = response.data;
+    const { data, config } = response;
     const code = data[codeKey];
     const message = data.message;
+    const isIgnoreToast = config.isIgnoreToast;
     // 兼容data为blob等文件格式
     if (code === successfulCode || !isObject(data)) {
       return response;
@@ -34,13 +35,15 @@ const ErrorModule = function(options = {}) {
         // 无权限 noPermissionHandler
         noPermissionHandler();
       }
-      toastHandler && toastHandler(message);
+      toastHandler && !isIgnoreToast && toastHandler(message);
       response.message = message;
       return Promise.reject(response);
     }
   }, error => {
     // 请求失败处理 axios.enhanceError
-    toastHandler && toastHandler(error.message);
+    const { message, config } = error;
+    const isIgnoreToast = config.isIgnoreToast;
+    toastHandler && !isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
   });
 

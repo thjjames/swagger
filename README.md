@@ -92,6 +92,13 @@ swagger.use(ErrorModule, {
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
+## 请求配置(see http://www.axios-js.com/zh-cn/docs/#%E8%AF%B7%E6%B1%82%E9%85%8D%E7%BD%AE)
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
+| isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
+
+
 ## 语法糖
 axios正常返回数据格式为
 ```js
