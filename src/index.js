@@ -33,6 +33,17 @@ class SwaggerApi extends axios.Axios {
   // Factory for creating new instances
   static create = function(instanceConfig) {
     return new SwaggerApi(merge(defaultConfig, instanceConfig));
+
+    // compatible with usage axios(config)
+    // const context = new SwaggerApi(merge(defaultConfig, instanceConfig));
+    // const instance = SwaggerApi.prototype.request.bind(context);
+
+    // const ownProp = {};
+    // for (const item of Object.getOwnPropertyNames(SwaggerApi.prototype)) {
+    //   ownProp[item] = SwaggerApi.prototype[item];
+    // }
+    // Object.assign(instance, Object.getPrototypeOf(SwaggerApi.prototype), ownProp, context);
+    // return instance;
   };
 
   // Expose Module
