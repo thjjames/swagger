@@ -26,7 +26,7 @@ this.$swagger.$get('/request').then(res => {})
 
 ### 方法
 
-#### create(创建新实例 see http://www.axios-js.com/zh-cn/docs/#axios-create-config)
+#### create(创建新实例 see <a href="http://www.axios-js.com/zh-cn/docs/#axios-create-config" target="_blank">http://www.axios-js.com/zh-cn/docs/#axios-create-config</a>)
 ```js
 const swagger = SwaggerApi.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
@@ -92,7 +92,9 @@ swagger.use(ErrorModule, {
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
-## 请求配置(see http://www.axios-js.com/zh-cn/docs/#%E8%AF%B7%E6%B1%82%E9%85%8D%E7%BD%AE)
+## 请求配置
+(see <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>)
+
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
