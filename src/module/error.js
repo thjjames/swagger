@@ -1,4 +1,4 @@
-import { noop, registerModule, isNumber, isObject } from './utils';
+import { registerModule, isNumber, isObject } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'

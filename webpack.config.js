@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'dev';
@@ -24,9 +25,13 @@ module.exports = {
       },
     ]
   },
-  plugins: isDev ? [
+  plugins: (isDev ? [
     new HtmlWebpackPlugin({ template: path.join(__dirname, 'test/index.html') })
-  ] : [],
+  ] : []).concat([
+    new webpack.DefinePlugin({
+      noop: () => void 0
+    })
+  ]),
   resolve: {
     extensions: ['.js']
   },

@@ -1,4 +1,4 @@
-import { noop, registerModule } from './utils';
+import { registerModule } from './utils';
 
 /**
  * @param isShowLoading 全局变量: 是否显示加载状态

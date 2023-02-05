@@ -34,16 +34,20 @@ class SwaggerApi extends axios.Axios {
   static create = function(instanceConfig) {
     return new SwaggerApi(merge({ ...defaultConfig }, instanceConfig));
 
-    // compatible with usage axios(config)
-    // const context = new SwaggerApi(merge(defaultConfig, instanceConfig));
-    // const instance = SwaggerApi.prototype.request.bind(context);
+    /* // compatible with usage axios(config)
+    const context = new SwaggerApi(merge({ ...defaultConfig }, instanceConfig));
+    const instance = SwaggerApi.prototype.request.bind(context);
 
-    // const ownProp = {};
-    // for (const item of Object.getOwnPropertyNames(SwaggerApi.prototype)) {
-    //   ownProp[item] = SwaggerApi.prototype[item];
-    // }
-    // Object.assign(instance, Object.getPrototypeOf(SwaggerApi.prototype), ownProp, context);
-    // return instance;
+    // all the Class.prototype is nonenumerable in ES6 rules
+    for (const property of Object.getOwnPropertyNames(SwaggerApi.prototype)) {
+      if (property === 'constructor') continue;
+      Object.defineProperty(SwaggerApi.prototype, property, {
+        enumerable: true
+      });
+    }
+
+    Object.assign(instance, Object.getPrototypeOf(SwaggerApi.prototype), SwaggerApi.prototype, context);
+    return instance; */
   };
 
   // Expose Module
