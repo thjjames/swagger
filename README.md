@@ -99,6 +99,31 @@ swagger.use(ErrorModule, {
 | reservedErrorHandler | 保留错误码处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
+#### 自定义模块CustomizedModule
+除了上述提供的通用模块外，也可以在项目中自由定义任何模块 _module_，用以抽离繁复的 _interceptors.request_ 或 _interceptors.response_ 里的逻辑，方式很简单：
+```js
+// module.js
+export const CustomizedModule = function(options = {}) {
+  this.interceptors.request.use(config => {
+    // ur customized code
+    return config
+  }, error => {
+    // ur customized code
+    return Promise.reject(error)
+  })
+  this.interceptors.response.use(response => {
+    // ur customized code
+    return response
+  }, error => {
+    // ur customized code
+    return Promise.reject(error)
+  })
+}
+
+// axios.js
+swagger.use(CustomizedModule)
+```
+
 ## 请求配置
 > 参考 <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>
 
