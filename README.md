@@ -93,8 +93,10 @@ swagger.use(ErrorModule, {
 | successfulCode | 成功码 | _number_ | `200` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | noPermissionCode | 无权限码 | _number_ | `403` |
+| reservedErrorCode | 保留错误码 | _number_/_array_ | `-999` |
 | unauthorizedHandler | 未授权处理方法 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
+| reservedErrorHandler | 保留错误码处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
 ## 请求配置
