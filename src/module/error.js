@@ -1,4 +1,4 @@
-import { registerModule, isNumber, isObject } from './utils';
+import { isNumber, isObject } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'
@@ -12,7 +12,6 @@ import { registerModule, isNumber, isObject } from './utils';
  * @param toastHandler toast提示实例方法 若不存在则由业务自行处理
  */
 const ErrorModule = function(options = {}) {
-  registerModule.call(this, 'ErrorModule');
   const codeKey = options.codeKey || 'code';
   const successfulCode = isNumber(options.successfulCode) ? options.successfulCode : 200; // fix value 0
   const unauthorizedCode = options.unauthorizedCode || 401;

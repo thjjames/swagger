@@ -1,5 +1,4 @@
 import qs from 'qs';
-import { registerModule } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'
@@ -8,7 +7,6 @@ import { registerModule } from './utils';
  * @param getRefreshToken 获取新token方法
  */
 const RefreshTokenModule = function(options = {}) {
-  registerModule.call(this, 'RefreshTokenModule');
   const codeKey = options.codeKey || 'code';
   const unauthorizedCode = options.unauthorizedCode || 401;
   const maxTryTimes = options.maxTryTimes || 1;
