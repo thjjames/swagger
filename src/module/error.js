@@ -1,4 +1,4 @@
-import { registerModule, isNumber, isObject } from './utils';
+import { registerModule, isObject } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'
@@ -12,7 +12,8 @@ import { registerModule, isNumber, isObject } from './utils';
 const ErrorModule = function(options = {}) {
   registerModule.call(this, 'ErrorModule');
   const codeKey = options.codeKey || 'code';
-  const successfulCode = isNumber(options.successfulCode) ? options.successfulCode : 200; // fix value 0
+  const messageKey = options.messageKey || 'message';
+  const successfulCode = options.successfulCode || 0;
   const unauthorizedCode = options.unauthorizedCode || 401;
   const noPermissionCode = options.noPermissionCode || 403;
   const unauthorizedHandler = options.unauthorizedHandler || noop;
@@ -22,7 +23,7 @@ const ErrorModule = function(options = {}) {
     // 根据后端返回来处理
     const { data, config } = response;
     const code = data[codeKey];
-    const message = data.message;
+    const message = data[messageKey];
     const isIgnoreToast = config.isIgnoreToast;
     // 兼容data为blob等文件格式
     if (code === successfulCode || !isObject(data)) {
