@@ -2,7 +2,7 @@ import axios from 'axios';
 import merge from 'lodash.merge';
 import defaultConfig from 'axios/lib/defaults';
 import { RefreshTokenModule, LoadingModule, ErrorModule } from './module';
-import { isObject } from './module/utils';
+import { registerModule, isObject } from './module/utils';
 
 const getInnerData = res => {
   return isObject(res.data) ? res.data.data : res.data;
@@ -19,6 +19,7 @@ class SwaggerApi extends axios.Axios {
    * @param options
    */
   use(module, options) {
+    registerModule.call(this, module.name);
     return module.call(this, options);
   }
 

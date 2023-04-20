@@ -94,9 +94,36 @@ swagger.use(ErrorModule, {
 | successfulCode | 成功码 | _number_ | `0` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | noPermissionCode | 无权限码 | _number_ | `403` |
+| reservedErrorCode | 保留错误码 | _number_/_array&lt;number&gt;_ | `-999` |
 | unauthorizedHandler | 未授权处理方法 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
+| reservedErrorHandler | 保留错误码处理方法 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
+
+#### 自定义模块CustomizedModule
+除了上述提供的通用模块外，也可以在项目中自由定义任何模块 _module_，用以抽离繁复的 _interceptors.request_ 或 _interceptors.response_ 里的逻辑，方式很简单：
+```js
+// module.js
+export const CustomizedModule = function(options = {}) {
+  this.interceptors.request.use(config => {
+    // ur customized code
+    return config
+  }, error => {
+    // ur customized code
+    return Promise.reject(error)
+  })
+  this.interceptors.response.use(response => {
+    // ur customized code
+    return response
+  }, error => {
+    // ur customized code
+    return Promise.reject(error)
+  })
+}
+
+// axios.js
+swagger.use(CustomizedModule)
+```
 
 ## 请求配置
 > 参考 <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>
@@ -137,5 +164,5 @@ this.$swagger.$post(url, data, config)
 ## contributor
 [James Tian](<https://github.com/thjjames>) <img width="32" src="https://avatars1.githubusercontent.com/u/8946788?s=400&u=74db1b1c5254cc5980c851f6625f445f73cb0a19&v=4" />
 
-## feadback
+## feedback
 please create issues on https://github.com/thjjames/swagger-api/issues or send an email on <thjjames@163.com>

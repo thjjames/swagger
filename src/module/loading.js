@@ -1,12 +1,9 @@
-import { registerModule } from './utils';
-
 /**
  * @param isShowLoading 全局变量: 是否显示加载状态
  * @param showLoadingHandler 展示加载方法
  * @param hideLoadingHandler 隐藏加载方法
  */
 const LoadingModule = function(options = {}) {
-  registerModule.call(this, 'LoadingModule');
   const { isShowLoading, showLoadingHandler = noop, hideLoadingHandler = noop } = options;
 
   const getShowLoading = config => {
