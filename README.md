@@ -14,7 +14,7 @@ npm i -S @github.com:thjjames/swagger-api
 
 ## 基础用法
 ```js
-import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from 'swagger-api'
+import SwaggerApi, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger-api'
 
 // SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
 const swagger = SwaggerApi.create({
