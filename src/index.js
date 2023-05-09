@@ -1,7 +1,7 @@
 import axios from 'axios';
 import merge from 'lodash.merge';
 import defaultConfig from 'axios/lib/defaults';
-import { RefreshTokenModule, LoadingModule, ErrorModule } from './module';
+import { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from './module';
 import { registerModule, isObject } from './module/utils';
 
 const getInnerData = res => {
@@ -15,7 +15,7 @@ class SwaggerApi extends axios.Axios {
 
   /**
    * use extend module
-   * @param module (RefreshTokenModule | LoadingModule | ErrorModule)
+   * @param module (RefreshTokenModule | LoadingModule | RaceModule | ErrorModule)
    * @param options
    */
   use(module, options) {
@@ -54,6 +54,7 @@ class SwaggerApi extends axios.Axios {
   // Expose Module
   static RefreshTokenModule = RefreshTokenModule;
   static LoadingModule = LoadingModule;
+  static RaceModule = RaceModule;
   static ErrorModule = ErrorModule;
 
   // Expose Cancel & CancelToken
@@ -62,5 +63,5 @@ class SwaggerApi extends axios.Axios {
   static isCancel = axios.isCancel;
 };
 
-export { RefreshTokenModule, LoadingModule, ErrorModule }; // not effective for build, only for local test
+export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule }; // not effective for build, only for local test
 export default SwaggerApi;

@@ -1,5 +1,5 @@
 /**
- * @param isShowLoading 全局变量: 是否显示加载状态
+ * @param isShowLoading 全局/局部变量: 是否显示加载状态
  * @param showLoadingHandler 展示加载方法
  * @param hideLoadingHandler 隐藏加载方法
  */

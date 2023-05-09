@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { handleErrorBlob, isObject } from './utils';
 
 /**
@@ -51,8 +52,9 @@ const ErrorModule = function(options = {}) {
   }, error => {
     // 请求失败处理 axios.enhanceError
     const { message, config } = error;
-    const isIgnoreToast = config.isIgnoreToast;
-    toastHandler && !isIgnoreToast && toastHandler(message);
+    const isIgnoreToast = config?.isIgnoreToast;
+    // 无需提示信息情况 1未提供提示方法 2配置 3主动取消的接口
+    toastHandler && !isIgnoreToast && !axios.isCancel(error) && toastHandler(message);
     return Promise.reject(error);
   });
 

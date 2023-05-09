@@ -77,6 +77,19 @@ swagger.use(LoadingModule, {
 | showLoadingHandler | 展示加载方法 | _function_ | - |
 | hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
+#### raceModule
+```js
+import { RaceModule } from 'swagger-api'
+swagger.use(RaceModule, {
+  isAllowRace: true
+})
+```
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| isAllowRace | 是否允许竞态，可以通过request.config设置单个请求 | _boolean_ | `false` |
+| raceConfigs | 竞态参数 | __array&lt;string&gt;__ | `['url']` |
+
 #### errorModule
 > Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
 ```js
@@ -131,6 +144,7 @@ swagger.use(CustomizedModule)
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
+| isAllowRace | 是否允许竞态，可以覆盖raceModule的全局值 | _boolean_ | `false` |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
 
 

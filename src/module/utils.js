@@ -33,6 +33,5 @@ const isType = function(type) {
     return _toString.call(obj) === `[object ${type}]`;
   }
 }
-export const isNumber = isType('Number');
 export const isObject = isType('Object');
 export const isBlob = isType('Blob');

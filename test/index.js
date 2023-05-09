@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Message, Loading } from 'element-ui';
-import SwaggerApi, { RefreshTokenModule, LoadingModule, ErrorModule } from '../src';
+import SwaggerApi, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from '../src';
 
 const swagger = SwaggerApi.create({
   baseURL: '/api'
@@ -14,6 +14,8 @@ swagger.use(RefreshTokenModule).use(LoadingModule, {
   hideLoadingHandler: () => {
     loadingInstance.close();
   }
+}).use(RaceModule, {
+  isAllowRace: true,
 }).use(ErrorModule, {
   codeKey: 'status',
   successfulCode: 0,
@@ -83,10 +85,12 @@ new Vue({
       }).catch(err => {
         console.log('async1 catch', err);
       });
-      swagger.$get('/request?query=1').then(res => {
-        console.log('async2 then', res);
-      }).catch(err => {
-        console.log('async2 catch', err);
+      setTimeout(() => {
+        swagger.$get('/request').then(res => {
+          console.log('async2 then', res);
+        }).catch(err => {
+          console.log('async2 catch', err);
+        });
       });
     },
     async syncMulti() {
