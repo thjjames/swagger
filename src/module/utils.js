@@ -6,6 +6,27 @@ export function registerModule(moduleName) {
   this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
 };
 
+// 针对responseType: 'blob'失败的情况 判断blob类型是否可以转为对象类型的错误信息
+export async function handleErrorBlob(response) {
+  const { data } = response;
+  if (!isBlob(data)) return;
+
+  const result = await new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      resolve(this.result);
+    };
+    fileReader.readAsText(data);
+  });
+
+  try {
+    response.data = JSON.parse(result);
+    return response;
+  } catch (e) {
+    return response;
+  }
+};
+
 const _toString = Object.prototype.toString;
 const isType = function(type) {
   return function(obj) {
@@ -14,3 +35,4 @@ const isType = function(type) {
 }
 export const isNumber = isType('Number');
 export const isObject = isType('Object');
+export const isBlob = isType('Blob');

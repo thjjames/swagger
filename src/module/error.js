@@ -1,4 +1,4 @@
-import { isObject } from './utils';
+import { handleErrorBlob, isObject } from './utils';
 
 /**
  * @param codeKey 返回数据code键名: 默认'code'
@@ -23,12 +23,14 @@ const ErrorModule = function(options = {}) {
   const reservedErrorHandler = options.reservedErrorHandler || noop;
   const toastHandler = options.toastHandler;
   this.interceptors.response.use(response => {
+    // 处理data为blob类型时的失败情况
+    handleErrorBlob(response);
     // 根据后端返回来处理
     const { data, config } = response;
     const code = data[codeKey];
     const message = data[messageKey];
     const isIgnoreToast = config.isIgnoreToast;
-    // 兼容data为blob等文件格式
+    // 兼容data为非对象类型时直接返回
     if (code === successfulCode || !isObject(data)) {
       return response;
     } else {
