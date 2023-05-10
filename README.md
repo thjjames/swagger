@@ -88,7 +88,7 @@ swagger.use(RaceModule, {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isAllowRace | 是否允许竞态，可以通过request.config设置单个请求 | _boolean_ | `false` |
-| raceConfigs | 竞态参数 | __array&lt;string&gt;__ | `['url']` |
+| raceConfigs | 竞态参数，支持点表示法 | __array&lt;string&gt;__ | `['url']` |
 
 #### errorModule
 > Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！

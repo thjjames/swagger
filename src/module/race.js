@@ -1,14 +1,16 @@
 import axios from 'axios';
+import qs from 'qs';
+import { getObjectValueAllowDot } from './utils';
 
 /**
  * 不同于axios.race 这里的race表示另类的请求竞态 当后一个同类型请求发起时 取消前一个未完成请求
  * @param isAllowRace 全局全局/局部变量: 是否允许竞态
- * @param raceConfigs 同类型竞态参数
+ * @param raceConfigs 同类型竞态参数 支持params.id格式
  */
 const RaceModule = function(options = {}) {
   const { isAllowRace, raceConfigs = ['url'] } = options;
 
-  if (!Array.isArray(raceConfigs) || raceConfigs.some(item => typeof item !== 'string')) {
+  if (!Array.isArray(raceConfigs) || raceConfigs.some(key => typeof key !== 'string')) {
     console.error('param raceConfigs must be String[]');
     return this;
   }
@@ -18,8 +20,18 @@ const RaceModule = function(options = {}) {
     if (config?.isAllowRace !== void 0) return config.isAllowRace;
     return isAllowRace;
   };
-  // todo url去参数 + method/params/data参数
-  const getRequestKey = config => raceConfigs.map(item => config[item]).join('|');
+  const getRequestKey = config => {
+    return raceConfigs.map(key => {
+      let value = getObjectValueAllowDot(config, key);
+      switch (key) {
+        case 'params':
+        case 'data':
+          value = qs.stringify(value);
+          break;
+      }
+      return value;
+    }).join('|');
+  };
   const deleteRequestMap = config => {
     if (!config || !getAllowRace(config)) return;
 

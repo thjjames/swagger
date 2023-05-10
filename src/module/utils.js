@@ -6,6 +6,15 @@ export function registerModule(moduleName) {
   this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
 };
 
+// 启用点表示法获取对象的值
+export function getObjectValueAllowDot(obj, key) {
+  const array = key.split('.');
+  while (obj && array.length) {
+    obj = obj[array.shift()];
+  }
+  return obj;
+};
+
 // 针对responseType: 'blob'失败的情况 判断blob类型是否可以转为对象类型的错误信息
 export async function handleErrorBlob(response) {
   const { data } = response;
