@@ -4,9 +4,12 @@
   "author": "tianhaojun(James) <thjjames@163.com>",
   "keywords": [
     "XMLHttpRequest",
-    "XHR",
+    "xhr",
+    "http",
     "axios",
-    "api"
+    "api",
+    "ajax",
+    "promise"
   ],
   "description": "通用swagger-api请求库 基于axios扩展",
   "license": "ISC",
