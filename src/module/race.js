@@ -51,6 +51,9 @@ const RaceModule = function(options = {}) {
       requestMap.set(key, source);
     }
     return config;
+  }, error => {
+    deleteRequestMap(error.config);
+    return Promise.reject(error);
   });
 
   this.interceptors.response.use(response => {
