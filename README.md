@@ -4,7 +4,7 @@
 
 ## 使用说明
 ```bash
-npm i -S @github.com:thjjames/swagger-api
+npm i -S github:thjjames/swagger-api
 ```
 或  
 `package.json`中`dependencies`添加
