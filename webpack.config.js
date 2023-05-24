@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
       library: {
         name: 'SwaggerApi',
         type: 'umd',
-        // export: 'default',
+        export: 'default',
         umdNamedDefine: true,
       },
       globalObject: 'this'
