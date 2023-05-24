@@ -61,5 +61,5 @@ class SwaggerApi extends Axios {
   static isCancel = isCancel;
 };
 
-export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule, isCancel }; // not effective for build, only for local test
+export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule }; // not effective for build, only for local test
 export default SwaggerApi;
