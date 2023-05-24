@@ -24,8 +24,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "axios": "^0.23.0",
-    "lodash.merge": "^4.6.2",
+    "axios": "^1.4.0",
     "qs": "^6.10.1"
   },
   "devDependencies": {

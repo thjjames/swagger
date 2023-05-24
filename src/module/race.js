@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { CancelToken } from 'axios';
 import qs from 'qs';
 import { getObjectValueAllowDot } from './utils';
 
@@ -46,7 +46,7 @@ const RaceModule = function(options = {}) {
         requestMap.get(key).cancel(`request ${key} canceled by RaceModule`);
       }
 
-      const source = axios.CancelToken.source();
+      const source = CancelToken.source();
       config.cancelToken = source.token;
       requestMap.set(key, source);
     }

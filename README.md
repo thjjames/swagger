@@ -1,5 +1,5 @@
 # SWAGGER-API
-通用swagger-api请求库 基于axios扩展 使用此库后可以不用安装axios  
+通用swagger-api请求库 基于axios v1扩展 使用此库后可以不用安装axios  
 ![](https://github.com/thjjames/swagger-api/blob/master/swagger-api.png?raw=true)
 
 ## 使用说明

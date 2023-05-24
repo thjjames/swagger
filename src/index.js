@@ -1,6 +1,5 @@
-import axios from 'axios';
-import merge from 'lodash.merge';
-import defaultConfig from 'axios/lib/defaults';
+import { Axios, mergeConfig, CancelToken, isCancel } from 'axios';
+import defaultConfig from 'axios/unsafe/defaults'; // why axios/unsafe/defaults not axios/lib/defaults, see axios/package.json's exports
 import { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from './module';
 import { registerModule, isObject } from './module/utils';
 
@@ -8,7 +7,7 @@ const getInnerData = res => {
   return isObject(res.data) ? res.data.data : res.data;
 };
 
-class SwaggerApi extends axios.Axios {
+class SwaggerApi extends Axios {
   // constructor() {
   //   super(...arguments);
   // }
@@ -33,10 +32,10 @@ class SwaggerApi extends axios.Axios {
 
   // Factory for creating new instances
   static create = function(instanceConfig) {
-    return new SwaggerApi(merge({ ...defaultConfig }, instanceConfig));
+    return new SwaggerApi(mergeConfig(defaultConfig, instanceConfig));
 
     /* // compatible with usage axios(config)
-    const context = new SwaggerApi(merge({ ...defaultConfig }, instanceConfig));
+    const context = new SwaggerApi(mergeConfig(defaultConfig, instanceConfig));
     const instance = SwaggerApi.prototype.request.bind(context);
 
     // all the Class.prototype is nonenumerable in ES6 rules
@@ -57,11 +56,10 @@ class SwaggerApi extends axios.Axios {
   static RaceModule = RaceModule;
   static ErrorModule = ErrorModule;
 
-  // Expose Cancel & CancelToken
-  static Cancel = axios.Cancel;
-  static CancelToken = axios.CancelToken;
-  static isCancel = axios.isCancel;
+  // Expose CancelToken & isCancel
+  static CancelToken = CancelToken;
+  static isCancel = isCancel;
 };
 
-export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule }; // not effective for build, only for local test
+export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule, isCancel }; // not effective for build, only for local test
 export default SwaggerApi;
