@@ -152,17 +152,23 @@ swagger.use(CustomizedModule)
 axios正常返回数据格式为
 ```js
 {
-  config: {},
+  // the response that was provided by the server
   data: {
     code: 200,
     message: '',
     data: {}
   },
-  headers: {},
-  message: '',
-  request: {},
+  // the HTTP status code from the server response
   status: 200,
-  statusText: 'OK'
+  // the HTTP status message from the server response
+  statusText: 'OK',
+  // the HTTP headers that the server responded with All header names are lowercase and can be accessed using the bracket notation.
+  // Example: `response.headers['content-type']`
+  headers: {},
+  // the config that was provided to `axios` for the request
+  config: {},
+  // the request that generated this response
+  request: {}
 }
 ```
 语法糖可以帮助直接返回最里层data数据
