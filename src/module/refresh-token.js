@@ -18,7 +18,7 @@ const RefreshTokenModule = function(options = {}) {
     if (isInApp) {
       token = await $native.getToken().catch(noop);
     } else {
-      token = await $axios.getToken().catch(noop);
+      token = await $swagger.getToken().catch(noop);
     }
     return token;
   });
