@@ -46,7 +46,6 @@ const ErrorModule = function(options = {}) {
         reservedErrorHandler(code);
       }
       toastHandler && !isIgnoreToast && toastHandler(message);
-      response.message = message;
       return Promise.reject(response);
     }
   }, error => {
