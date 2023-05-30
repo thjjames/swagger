@@ -1,5 +1,4 @@
 import { CancelToken } from 'axios';
-import qs from 'qs';
 import { getObjectValueAllowDot } from './utils';
 
 /**
@@ -26,7 +25,8 @@ const RaceModule = function(options = {}) {
       switch (key) {
         case 'params':
         case 'data':
-          value = qs.stringify(value);
+          // value = qs.stringify(value, { encode: false });
+          value = new URLSearchParams(value).toString();
           break;
       }
       return value;

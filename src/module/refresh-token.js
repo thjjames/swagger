@@ -1,5 +1,3 @@
-import qs from 'qs';
-
 /**
  * @param codeKey 返回数据code键名: 默认'code'
  * @param unauthorizedCode 未授权码: 默认401
@@ -14,10 +12,13 @@ const RefreshTokenModule = function(options = {}) {
     const ua = navigator.userAgent;
     const isInApp = ua.includes('iPhone') || ua.includes('Android');
     let token;
+    token = new URLSearchParams(location.search || location.hash.slice(1)).get('token');
+    if (token) return token;
+
     if (isInApp) {
-      token = await $native.getToken().catch(() => {});
+      token = await $native.getToken().catch(noop);
     } else {
-      token = qs.parse(location.search, { ignoreQueryPrefix: true })?.token;
+      token = await $axios.getToken().catch(noop);
     }
     return token;
   });
