@@ -14,6 +14,7 @@
   "description": "通用swagger-api请求库 基于axios扩展",
   "license": "ISC",
   "main": "dist/swagger.min.js",
+  "module": "dist/swagger.min.mjs",
   "files": [
     "dist"
   ],
