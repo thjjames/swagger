@@ -50,16 +50,23 @@ class SwaggerApi extends Axios {
     return instance; */
   };
 
-  // Expose Module
-  static RefreshTokenModule = RefreshTokenModule;
-  static LoadingModule = LoadingModule;
-  static RaceModule = RaceModule;
-  static ErrorModule = ErrorModule;
-
-  // Expose CancelToken & isCancel
-  static CancelToken = CancelToken;
-  static isCancel = isCancel;
+  // only effective in ES5.require
+  // static RefreshTokenModule = RefreshTokenModule;
+  // static LoadingModule = LoadingModule;
+  // static RaceModule = RaceModule;
+  // static ErrorModule = ErrorModule;
+  // static CancelToken = CancelToken;
+  // static isCancel = isCancel;
 };
 
-export { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule }; // not effective for build, only for local test
+export {
+  // Expose Modules
+  RefreshTokenModule,
+  LoadingModule,
+  RaceModule,
+  ErrorModule,
+  // Expose CancelToken & isCancel
+  CancelToken,
+  isCancel
+};
 export default SwaggerApi;
