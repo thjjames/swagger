@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import { Message, Loading } from 'element-ui';
-import SwaggerApi, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from '../src';
+import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from '../src';
 
-const swagger = SwaggerApi.create({
+const swagger = Swagger.create({
   baseURL: '/api'
 });
 let loadingInstance = {}

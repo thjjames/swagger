@@ -7,7 +7,7 @@ const getInnerData = res => {
   return isObject(res.data) ? res.data.data : res.data;
 };
 
-class SwaggerApi extends Axios {
+class Swagger extends Axios {
   // constructor() {
   //   super(...arguments);
   // }
@@ -32,21 +32,21 @@ class SwaggerApi extends Axios {
 
   // Factory for creating new instances
   static create = function(instanceConfig) {
-    return new SwaggerApi(mergeConfig(defaultConfig, instanceConfig));
+    return new Swagger(mergeConfig(defaultConfig, instanceConfig));
 
     /* // compatible with usage axios(config)
-    const context = new SwaggerApi(mergeConfig(defaultConfig, instanceConfig));
-    const instance = SwaggerApi.prototype.request.bind(context);
+    const context = new Swagger(mergeConfig(defaultConfig, instanceConfig));
+    const instance = Swagger.prototype.request.bind(context);
 
     // all the Class.prototype is nonenumerable in ES6 rules
-    for (const property of Object.getOwnPropertyNames(SwaggerApi.prototype)) {
+    for (const property of Object.getOwnPropertyNames(Swagger.prototype)) {
       if (property === 'constructor') continue;
-      Object.defineProperty(SwaggerApi.prototype, property, {
+      Object.defineProperty(Swagger.prototype, property, {
         enumerable: true
       });
     }
 
-    Object.assign(instance, Object.getPrototypeOf(SwaggerApi.prototype), SwaggerApi.prototype, context);
+    Object.assign(instance, Object.getPrototypeOf(Swagger.prototype), Swagger.prototype, context);
     return instance; */
   };
 
@@ -69,4 +69,4 @@ export {
   CancelToken,
   isCancel
 };
-export default SwaggerApi;
+export default Swagger;

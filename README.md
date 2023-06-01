@@ -1,23 +1,23 @@
-# SWAGGER-API
-通用swagger-api请求库 基于axios v1扩展 使用此库后可以不用安装axios  
-![](https://github.com/thjjames/swagger-api/blob/master/swagger-api.png?raw=true)
+# SWAGGER
+通用请求库swagger 基于axios v1扩展 使用此库后可以不用安装axios  
+![](https://github.com/thjjames/swagger/blob/master/swagger.png?raw=true)
 
 ## 使用说明
 ```bash
-npm i -S github:thjjames/swagger-api
+npm i -S github:thjjames/swagger
 ```
 或  
 `package.json`中`dependencies`添加
 ```
-"swagger-api": "git@github.com:thjjames/swagger-api"
+"swagger": "git@github.com:thjjames/swagger"
 ```
 
 ## 基础用法
 ```js
-import SwaggerApi, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger-api'
+import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger'
 
-// SwaggerApi.create suggested but not new keyword, cause param defaults would be lost
-const swagger = SwaggerApi.create({
+// Swagger.create suggested but not new keyword, cause param defaults would be lost
+const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api'
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
@@ -33,7 +33,7 @@ this.$swagger.$get('/request').then(res => {})
 > 参考 http://www.axios-js.com/zh-cn/docs/#axios-create-config
 
 ```js
-const swagger = SwaggerApi.create({
+const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
 })
 ```
@@ -47,7 +47,7 @@ swagger.use(module, options)
 
 #### refreshTokenModule
 ```js
-import { RefreshTokenModule } from 'swagger-api'
+import { RefreshTokenModule } from 'swagger'
 swagger.use(RefreshTokenModule, {
   unauthorizedCode: 401,
   getRefreshToken() {}
@@ -63,7 +63,7 @@ swagger.use(RefreshTokenModule, {
 
 #### loadingModule
 ```js
-import { LoadingModule } from 'swagger-api'
+import { LoadingModule } from 'swagger'
 swagger.use(LoadingModule, {
   isShowLoading: true,
   showLoadingHandler() {},
@@ -79,7 +79,7 @@ swagger.use(LoadingModule, {
 
 #### raceModule
 ```js
-import { RaceModule } from 'swagger-api'
+import { RaceModule } from 'swagger'
 swagger.use(RaceModule, {
   isAllowRace: true
 })
@@ -93,7 +93,7 @@ swagger.use(RaceModule, {
 #### errorModule
 > Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
 ```js
-import { ErrorModule } from 'swagger-api'
+import { ErrorModule } from 'swagger'
 swagger.use(ErrorModule, {
   unauthorizedCode: 401,
   unauthorizedHandler() {}
@@ -185,4 +185,4 @@ this.$swagger.$post(url, data, config)
 [James Tian](<https://github.com/thjjames>) <img width="32" src="https://avatars1.githubusercontent.com/u/8946788?s=400&u=74db1b1c5254cc5980c851f6625f445f73cb0a19&v=4" />
 
 ## feedback
-please create issues on https://github.com/thjjames/swagger-api/issues or send an email on <thjjames@163.com>
+please create issues on https://github.com/thjjames/swagger/issues or send an email on <thjjames@163.com>

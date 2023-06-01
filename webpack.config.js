@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
       output: {
         filename: `swagger.${isModule ? 'mjs' : 'js'}`,
         library: {
-          name: isModule ? void 0 : 'SwaggerApi',
+          name: isModule ? void 0 : 'Swagger',
           type,
           // export: 'default',
           umdNamedDefine: true

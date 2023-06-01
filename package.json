@@ -1,17 +1,18 @@
 {
-  "name": "swagger-api",
+  "name": "swagger",
   "version": "1.0.0",
   "author": "tianhaojun(James) <thjjames@163.com>",
   "keywords": [
     "XMLHttpRequest",
     "xhr",
     "http",
+    "swagger",
     "axios",
     "api",
     "ajax",
     "promise"
   ],
-  "description": "通用swagger-api请求库 基于axios扩展",
+  "description": "通用请求库swagger 基于axios扩展",
   "license": "ISC",
   "main": "dist/swagger.js",
   "module": "dist/swagger.mjs",

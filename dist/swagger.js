@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("SwaggerApi", [], factory);
+		define("Swagger", [], factory);
 	else if(typeof exports === 'object')
-		exports["SwaggerApi"] = factory();
+		exports["Swagger"] = factory();
 	else
-		root["SwaggerApi"] = factory();
+		root["Swagger"] = factory();
 })(this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -7597,7 +7597,7 @@ const getInnerData = res => {
   return (0,_module_utils__WEBPACK_IMPORTED_MODULE_2__.isObject)(res.data) ? res.data.data : res.data;
 };
 
-class SwaggerApi extends axios__WEBPACK_IMPORTED_MODULE_3__.Axios {
+class Swagger extends axios__WEBPACK_IMPORTED_MODULE_3__.Axios {
   // constructor() {
   //   super(...arguments);
   // }
@@ -7631,25 +7631,25 @@ class SwaggerApi extends axios__WEBPACK_IMPORTED_MODULE_3__.Axios {
 
 }
 
-(0,_babel_runtime_corejs3_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(SwaggerApi, "create", function (instanceConfig) {
-  return new SwaggerApi((0,axios__WEBPACK_IMPORTED_MODULE_3__.mergeConfig)(axios_unsafe_defaults__WEBPACK_IMPORTED_MODULE_4__["default"], instanceConfig));
+(0,_babel_runtime_corejs3_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(Swagger, "create", function (instanceConfig) {
+  return new Swagger((0,axios__WEBPACK_IMPORTED_MODULE_3__.mergeConfig)(axios_unsafe_defaults__WEBPACK_IMPORTED_MODULE_4__["default"], instanceConfig));
   /* // compatible with usage axios(config)
-  const context = new SwaggerApi(mergeConfig(defaultConfig, instanceConfig));
-  const instance = SwaggerApi.prototype.request.bind(context);
+  const context = new Swagger(mergeConfig(defaultConfig, instanceConfig));
+  const instance = Swagger.prototype.request.bind(context);
    // all the Class.prototype is nonenumerable in ES6 rules
-  for (const property of Object.getOwnPropertyNames(SwaggerApi.prototype)) {
+  for (const property of Object.getOwnPropertyNames(Swagger.prototype)) {
     if (property === 'constructor') continue;
-    Object.defineProperty(SwaggerApi.prototype, property, {
+    Object.defineProperty(Swagger.prototype, property, {
       enumerable: true
     });
   }
-   Object.assign(instance, Object.getPrototypeOf(SwaggerApi.prototype), SwaggerApi.prototype, context);
+   Object.assign(instance, Object.getPrototypeOf(Swagger.prototype), Swagger.prototype, context);
   return instance; */
 });
 
 ;
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SwaggerApi);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Swagger);
 })();
 
 /******/ 	return __webpack_exports__;
