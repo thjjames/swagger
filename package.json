@@ -13,15 +13,15 @@
   ],
   "description": "通用swagger-api请求库 基于axios扩展",
   "license": "ISC",
-  "main": "dist/swagger.min.js",
-  "module": "dist/swagger.min.mjs",
+  "main": "dist/swagger.js",
+  "module": "dist/swagger.mjs",
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "npm run start",
-    "start": "webpack-dev-server --mode=development",
-    "build": "webpack --mode=production",
+    "start": "webpack-dev-server",
+    "build": "webpack",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {

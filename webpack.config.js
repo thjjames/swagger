@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-  const isDev = argv.mode === 'development';
+  const isDev = !!env.WEBPACK_SERVE;
 
   let types = ['module', 'umd'];
   if (isDev) types = types.slice(1);
@@ -11,11 +11,12 @@ module.exports = (env, argv) => {
   return types.map(type => {
     const isModule = type === 'module';
     return {
+      mode: 'development',
       entry: {
         main: isDev ? './test/index.js' : './src/index.js'
       },
       output: {
-        filename: `swagger.min.${isModule ? 'mjs' : 'js'}`,
+        filename: `swagger.${isModule ? 'mjs' : 'js'}`,
         library: {
           name: isModule ? void 0 : 'SwaggerApi',
           type,
