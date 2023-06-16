@@ -1,6 +1,6 @@
 # SWAGGER
 通用请求库swagger 基于axios@1扩展 使用此库后可以不用安装axios  
-![](https://github.com/thjjames/swagger/blob/master/swagger-framework.png?raw=true)
+![](https://raw.githubusercontent.com/thjjames/swagger/master/swagger-framework.png)
 
 ## 使用说明
 ```bash
