@@ -249,7 +249,7 @@ const RaceModule = function (options = {}) {
   };
 
   const getRaceConfigs = config => {
-    const _raceConfigs = (config === null || config === void 0 ? void 0 : config.raceConfigs) !== void 0 ? config.raceConfigs : raceConfigs;
+    const _raceConfigs = (config === null || config === void 0 ? void 0 : config.raceConfigs) || raceConfigs;
 
     if (!Array.isArray(_raceConfigs) || _raceConfigs.some(key => typeof key !== 'string')) {
       console.error('param raceConfigs must be String[]');

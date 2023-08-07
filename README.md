@@ -145,7 +145,7 @@ swagger.use(CustomizedModule)
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
 | isAllowRace | 是否允许竞态，可以覆盖raceModule的全局值 | _boolean_ | `false` |
-| raceConfigs | 竞态参数，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | `['url']` |
+| raceConfigs | 竞态参数，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | - |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
 
 
