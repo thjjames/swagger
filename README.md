@@ -30,7 +30,7 @@ this.$swagger.$get('/request').then(res => {})
 #### create(创建新实例)
 > 所有实例均由静态方法create生成，这里舍弃了`axios(config)`的写法
 
-> 参考 http://www.axios-js.com/zh-cn/docs/#axios-create-config
+> 参考 https://github.com/axios/axios#creating-an-instance
 
 ```js
 const swagger = Swagger.create({
@@ -41,6 +41,24 @@ const swagger = Swagger.create({
 #### use(使用扩展模块)
 ```js
 swagger.use(module, options)
+```
+
+##### 拦截器执行顺序
+参考 [axios.interceptors.use](https://github.com/axios/axios#multiple-interceptors) 的执行顺序 为反洋葱模型
+```js
+swagger.use(LoadingModule).use(RaceModule)
+```
+模块中的实际执行顺序为：
+```
+RaceModule.request-interceptor
+      ↓ ↓ ↓
+LoadingModule.request-interceptor
+      ↓ ↓ ↓
+ajax(config)
+      ↓ ↓ ↓
+LoadingModule.response-interceptor
+      ↓ ↓ ↓
+RaceModule.response-interceptor
 ```
 
 ### 扩展模块
