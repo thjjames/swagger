@@ -157,15 +157,15 @@ swagger.use(CustomizedModule)
 ```
 
 ## 请求配置
-> 参考 <a href="http://www.axios-js.com/zh-cn/docs/#请求配置" target="_blank">http://www.axios-js.com/zh-cn/docs/#请求配置</a>
+> 参考 <a href="https://github.com/axios/axios#request-config" target="_blank">https://github.com/axios/axios#request-config</a>
 
+目前 `swagger` 支持的自定义参数有：
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
 | isAllowRace | 是否允许竞态，可以覆盖raceModule的全局值 | _boolean_ | `false` |
 | raceConfigs | 竞态参数，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | - |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
-
 
 ## 语法糖
 axios正常返回数据格式为
