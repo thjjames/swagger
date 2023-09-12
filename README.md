@@ -77,7 +77,7 @@ swagger.use(RefreshTokenModule, {
 | codeKey | 后端返回data数据中code键名 | _string_ | `code` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | maxRetryTimes | 最大重试次数 | _number_ | `1` |
-| getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务方法，一般不通用需要根据实际业务传入` |
+| getRefreshToken | 获取新token方法 | _function():Promise_ | 内置业务方法，一般不通用需要根据实际业务传入 |
 
 #### loadingModule
 ```js
@@ -127,8 +127,8 @@ swagger.use(ErrorModule, {
 | noPermissionCode | 无权限码 | _number_ | `403` |
 | unauthorizedHandler | 未授权处理方法 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
-| serviceErrorHandler | 业务错误码处理方法，已排除未授权、无权限 | _function_ | - |
-| statusErrorHandler | 状态错误码处理方法，适用于埋点等场景 | _function_ | - |
+| serviceErrorHandler | 业务错误码处理方法，已排除未授权、无权限 | _function(response)_ | - |
+| statusErrorHandler | 状态错误码处理方法 | _function(response)_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
 #### 自定义模块CustomizedModule
