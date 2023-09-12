@@ -343,13 +343,13 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * @param codeKey 返回数据code键名: 默认'code'
  * @param unauthorizedCode 未授权码: 默认401
- * @param maxTryTimes 最大重试次数
+ * @param maxRetryTimes 最大重试次数
  * @param getRefreshToken 获取新token方法
  */
 const RefreshTokenModule = function (options = {}) {
   const codeKey = options.codeKey || 'code';
   const unauthorizedCode = options.unauthorizedCode || 401;
-  const maxTryTimes = options.maxTryTimes || 1;
+  const maxRetryTimes = options.maxRetryTimes || 1;
 
   const getRefreshToken = options.getRefreshToken || (async () => {
     const ua = navigator.userAgent;
@@ -378,12 +378,12 @@ const RefreshTokenModule = function (options = {}) {
       config
     } = response;
 
-    if (config._tryTimes === undefined) {
-      config._tryTimes = 0;
+    if (config._retryTimes === undefined) {
+      config._retryTimes = 0;
     }
 
-    config._tryTimes++;
-    if (config._tryTimes > maxTryTimes) return Promise.resolve(response);
+    config._retryTimes++;
+    if (config._retryTimes > maxRetryTimes) return Promise.resolve(response);
 
     if (isRefreshingToken) {
       // 这里需要返回Promise链来保证栈里请求执行后完成闭环！

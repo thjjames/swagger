@@ -76,7 +76,7 @@ swagger.use(RefreshTokenModule, {
 | --- | --- | --- | --- |
 | codeKey | 后端返回data数据中code键名 | _string_ | `code` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
-| maxTryTimes | 最大重试次数 | _number_ | `1` |
+| maxRetryTimes | 最大重试次数 | _number_ | `1` |
 | getRefreshToken | 获取新token方法 | _function&lt;Promise&gt;_ | `内置业务方法，一般不通用需要根据实际业务传入` |
 
 #### loadingModule
