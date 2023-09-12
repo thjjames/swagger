@@ -159,7 +159,7 @@ swagger.use(CustomizedModule)
 ## 请求配置
 > 参考 <a href="https://github.com/axios/axios#request-config" target="_blank">https://github.com/axios/axios#request-config</a>
 
-目前 `swagger` 支持的自定义参数有：
+目前 `swagger` 支持的自定义配置有：
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
