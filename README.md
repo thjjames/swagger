@@ -125,10 +125,10 @@ swagger.use(ErrorModule, {
 | successfulCode | 成功码 | _number_ | `0` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
 | noPermissionCode | 无权限码 | _number_ | `403` |
-| reservedErrorCode | 保留错误码 | _number_/_array&lt;number&gt;_ | `-999` |
 | unauthorizedHandler | 未授权处理方法 | _function_ | - |
 | noPermissionHandler | 无权限处理方法 | _function_ | - |
-| reservedErrorHandler | 保留错误码处理方法 | _function_ | - |
+| serviceErrorHandler | 业务错误码处理方法，已排除未授权、无权限 | _function_ | - |
+| statusErrorHandler | 状态错误码处理方法，适用于埋点等场景 | _function_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
 #### 自定义模块CustomizedModule

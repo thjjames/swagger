@@ -18,7 +18,7 @@ swagger.use(RefreshTokenModule).use(LoadingModule, {
   isAllowRace: true,
 }).use(ErrorModule, {
   codeKey: 'status',
-  successfulCode: 0,
+  // successfulCode: 0,
   toastHandler: Message.error
 });
 
