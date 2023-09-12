@@ -31,11 +31,11 @@ const RefreshTokenModule = function(options = {}) {
   const refreshTokenHandler = async response => {
     // 超过最大重试次数 抛出异常 避免死循环
     const { config } = response;
-    if (config._retryTimes === undefined) {
-      config._retryTimes = 0;
+    if (config._retryCount === undefined) {
+      config._retryCount = 0;
     }
-    config._retryTimes++;
-    if (config._retryTimes > maxRetryTimes) return Promise.resolve(response);
+    config._retryCount++;
+    if (config._retryCount > maxRetryTimes) return Promise.resolve(response);
 
     if (isRefreshingToken) {
       // 这里需要返回Promise链来保证栈里请求执行后完成闭环！
