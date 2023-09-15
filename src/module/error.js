@@ -30,22 +30,21 @@ const ErrorModule = function(options = {}) {
     const { data, config } = response;
     const code = data[codeKey];
     const message = data[messageKey];
-    const isIgnoreToast = config.isIgnoreToast;
     // 兼容data为非对象类型时直接返回
     if (code === successfulCode || !isObject(data)) {
       return response;
     } else {
       if (code === unauthorizedCode) {
         // 授权失败
-        unauthorizedHandler();
+        unauthorizedHandler(response);
       } else if (code === noPermissionCode) {
         // 无权限
-        noPermissionHandler();
+        noPermissionHandler(response);
       } else {
         // 剩余业务码错误
         serviceErrorHandler(response);
       }
-      toastHandler && !isIgnoreToast && toastHandler(message);
+      toastHandler && !config.isIgnoreToast && toastHandler(message);
       return Promise.reject(response);
     }
   }, error => {
@@ -55,10 +54,9 @@ const ErrorModule = function(options = {}) {
     }
     // 请求失败处理 axios.enhanceError
     const { message, config, response } = error;
-    const isIgnoreToast = config?.isIgnoreToast;
     statusErrorHandler(response);
     // 无需提示信息情况 1未提供提示方法 2配置
-    toastHandler && !isIgnoreToast && toastHandler(message);
+    toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
   });
 

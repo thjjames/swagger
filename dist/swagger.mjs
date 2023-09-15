@@ -66,24 +66,23 @@ const ErrorModule = function (options = {}) {
       config
     } = response;
     const code = data[codeKey];
-    const message = data[messageKey];
-    const isIgnoreToast = config.isIgnoreToast; // 兼容data为非对象类型时直接返回
+    const message = data[messageKey]; // 兼容data为非对象类型时直接返回
 
     if (code === successfulCode || !(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isObject)(data)) {
       return response;
     } else {
       if (code === unauthorizedCode) {
         // 授权失败
-        unauthorizedHandler();
+        unauthorizedHandler(response);
       } else if (code === noPermissionCode) {
         // 无权限
-        noPermissionHandler();
+        noPermissionHandler(response);
       } else {
         // 剩余业务码错误
         serviceErrorHandler(response);
       }
 
-      toastHandler && !isIgnoreToast && toastHandler(message);
+      toastHandler && !config.isIgnoreToast && toastHandler(message);
       return Promise.reject(response);
     }
   }, error => {
@@ -98,10 +97,9 @@ const ErrorModule = function (options = {}) {
       config,
       response
     } = error;
-    const isIgnoreToast = config === null || config === void 0 ? void 0 : config.isIgnoreToast;
     statusErrorHandler(response); // 无需提示信息情况 1未提供提示方法 2配置
 
-    toastHandler && !isIgnoreToast && toastHandler(message);
+    toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
   });
   return this;
