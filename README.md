@@ -106,7 +106,7 @@ swagger.use(RaceModule, {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isAllowRace | 是否允许竞态，可以通过request.config设置单个请求 | _boolean_ | `false` |
-| raceConfigs | 竞态参数，支持点表示法 | _array&lt;string&gt;_ | `['url']` |
+| raceKeys | 竞态键值组，键值支持点表示法 | _array&lt;string&gt;_ | `['url']` |
 | racePosition | 竞态位置，指定被取消的请求位置 | _'former' &#124; 'latter'_ | `former` |
 
 #### errorModule
@@ -165,7 +165,7 @@ swagger.use(CustomizedModule)
 | --- | --- | --- | --- |
 | isShowLoading | 是否显示加载状态，可以覆盖loadingModule的全局值 | _boolean_ | `false` |
 | isAllowRace | 是否允许竞态，可以覆盖raceModule的全局值 | _boolean_ | `false` |
-| raceConfigs | 竞态参数，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | - |
+| raceKeys | 竞态键值组，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | - |
 | racePosition | 竞态位置，可以覆盖raceModule的全局值 | _'former' &#124; 'latter'_ | - |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
 
