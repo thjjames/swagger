@@ -5,10 +5,10 @@ import { handleErrorBlob, isObject } from './utils';
  * @param codeKey 返回数据code键名: 默认'code'
  * @param successfulCode 成功码: 默认0
  * @param unauthorizedCode 未授权码: 默认401
- * @param noPermissionCode 无权限码: 默认403
+ * @param forbiddenCode 无权限码: 默认403
  * @param unauthorizedHandler 未授权处理方法 使用此方法时需要将RefreshTokenModule执行在ErrorModule之前
- * @param noPermissionHandler 无权限处理方法
- * @param serviceErrorHandler 业务错误码处理方法(exclude unauthorizedCode & noPermissionCode)
+ * @param forbiddenHandler 无权限处理方法
+ * @param serviceErrorHandler 业务错误码处理方法(exclude unauthorizedCode & forbiddenCode)
  * @param statusErrorHandler 状态错误码处理方法
  * @param toastHandler toast提示实例方法 若不存在则由业务自行处理
  */
@@ -17,9 +17,9 @@ const ErrorModule = function(options = {}) {
   const messageKey = options.messageKey || 'message';
   const successfulCode = options.successfulCode || 0;
   const unauthorizedCode = options.unauthorizedCode || 401;
-  const noPermissionCode = options.noPermissionCode || 403;
+  const forbiddenCode = options.forbiddenCode || 403;
   const unauthorizedHandler = options.unauthorizedHandler || noop;
-  const noPermissionHandler = options.noPermissionHandler || noop;
+  const forbiddenHandler = options.forbiddenHandler || noop;
   const serviceErrorHandler = options.serviceErrorHandler || noop;
   const statusErrorHandler = options.statusErrorHandler || noop;
   const toastHandler = options.toastHandler;
@@ -37,9 +37,9 @@ const ErrorModule = function(options = {}) {
       if (code === unauthorizedCode) {
         // 授权失败
         unauthorizedHandler(response);
-      } else if (code === noPermissionCode) {
+      } else if (code === forbiddenCode) {
         // 无权限
-        noPermissionHandler(response);
+        forbiddenHandler(response);
       } else {
         // 剩余业务码错误
         serviceErrorHandler(response);

@@ -124,9 +124,9 @@ swagger.use(ErrorModule, {
 | messageKey | 后端返回data数据中message键名 | _string_ | `message` |
 | successfulCode | 成功码 | _number_ | `0` |
 | unauthorizedCode | 未授权码 | _number_ | `401` |
-| noPermissionCode | 无权限码 | _number_ | `403` |
+| forbiddenCode | 无权限码 | _number_ | `403` |
 | unauthorizedHandler | 未授权处理方法 | _function(response)_ | - |
-| noPermissionHandler | 无权限处理方法 | _function(response)_ | - |
+| forbiddenHandler | 无权限处理方法 | _function(response)_ | - |
 | serviceErrorHandler | 业务错误码处理方法，已排除未授权、无权限 | _function(response)_ | - |
 | statusErrorHandler | 状态错误码处理方法 | _function(response)_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
