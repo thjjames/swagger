@@ -16,6 +16,7 @@ swagger.use(RefreshTokenModule).use(LoadingModule, {
   }
 }).use(RaceModule, {
   isAllowRace: true,
+  // racePosition: 'latter',
 }).use(ErrorModule, {
   codeKey: 'status',
   // successfulCode: 0,
@@ -90,6 +91,13 @@ new Vue({
           console.log('async2 then', res);
         }).catch(err => {
           console.log('async2 catch', err);
+        });
+        setTimeout(() => {
+          swagger.$get('/request').then(res => {
+            console.log('async3 then', res);
+          }).catch(err => {
+            console.log('async3 catch', err);
+          });
         });
       });
     },
