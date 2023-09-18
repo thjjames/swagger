@@ -47,6 +47,7 @@ const RaceModule = function(options = {}) {
   const setRequestMap = config => {
     const key = getRequestKey(config);
     const position = getRacePosition(config);
+    // todo: CancelToken is deprecated since axios v0.22.0, would be replaced with AbortController in future
     const source = CancelToken.source();
     config.cancelToken = source.token;
 
