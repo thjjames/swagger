@@ -123,11 +123,16 @@ swagger.use(RaceModule, {
 ```js
 import { ErrorModule } from 'swagger'
 import { Message } from 'element-ui'
+import router from '@/router'
 
 swagger.use(ErrorModule, {
   successfulCode: 0,
-  unauthorizedCode: 401,
-  unauthorizedHandler() {},
+  forbiddenCode: 403,
+  forbiddenHandler() {
+    setTimeout(() => {
+      router.push({ name: '403' });
+    })
+  },
   toastHandler: Message.error
 })
 ```

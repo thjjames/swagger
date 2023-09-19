@@ -57,9 +57,9 @@ const ErrorModule = function (options = {}) {
   const serviceErrorHandler = options.serviceErrorHandler || (() => void 0);
   const statusErrorHandler = options.statusErrorHandler || (() => void 0);
   const toastHandler = options.toastHandler;
-  this.interceptors.response.use(response => {
+  this.interceptors.response.use(async response => {
     // 处理data为blob类型时的失败情况
-    (0,_utils__WEBPACK_IMPORTED_MODULE_0__.handleErrorBlob)(response); // 根据后端返回来处理
+    await (0,_utils__WEBPACK_IMPORTED_MODULE_0__.handleErrorBlob)(response); // 根据后端返回来处理
 
     const {
       data,
@@ -73,13 +73,16 @@ const ErrorModule = function (options = {}) {
     } else {
       if (code === unauthorizedCode) {
         // 授权失败
-        unauthorizedHandler(response);
+        await unauthorizedHandler(response);
       } else if (code === forbiddenCode) {
         // 无权限
-        forbiddenHandler(response);
+        await forbiddenHandler(response);
       } else {
         // 剩余业务码错误
-        serviceErrorHandler(response);
+        const _response = await serviceErrorHandler(response); // 有特殊情况需要正常返回
+
+
+        if (_response) return _response;
       }
 
       toastHandler && !config.isIgnoreToast && toastHandler(message);
@@ -290,18 +293,20 @@ const RaceModule = function (options = {}) {
 
   const setRequestMap = config => {
     const key = getRequestKey(config);
-    const position = getRacePosition(config);
+    const position = getRacePosition(config); // todo: CancelToken is deprecated since axios v0.22.0, would be replaced with AbortController in future
+
     const source = axios__WEBPACK_IMPORTED_MODULE_2__.CancelToken.source();
     config.cancelToken = source.token;
 
     if (requestMap.has(key)) {
-      const cancelTip = "request ".concat(key, " canceled by RaceModule");
+      const cancelMessage = "request ".concat(key, " is canceled by RaceModule");
+      console.warn(cancelMessage);
 
       if (position === 'former') {
-        requestMap.get(key).cancel(cancelTip);
+        requestMap.get(key).cancel(cancelMessage);
         requestMap.set(key, source);
       } else {
-        source.cancel(cancelTip);
+        source.cancel(cancelMessage);
       }
     } else {
       requestMap.set(key, source);

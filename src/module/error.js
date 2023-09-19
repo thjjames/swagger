@@ -23,9 +23,9 @@ const ErrorModule = function(options = {}) {
   const serviceErrorHandler = options.serviceErrorHandler || noop;
   const statusErrorHandler = options.statusErrorHandler || noop;
   const toastHandler = options.toastHandler;
-  this.interceptors.response.use(response => {
+  this.interceptors.response.use(async response => {
     // 处理data为blob类型时的失败情况
-    handleErrorBlob(response);
+    await handleErrorBlob(response);
     // 根据后端返回来处理
     const { data, config } = response;
     const code = data[codeKey];
@@ -36,13 +36,15 @@ const ErrorModule = function(options = {}) {
     } else {
       if (code === unauthorizedCode) {
         // 授权失败
-        unauthorizedHandler(response);
+        await unauthorizedHandler(response);
       } else if (code === forbiddenCode) {
         // 无权限
-        forbiddenHandler(response);
+        await forbiddenHandler(response);
       } else {
         // 剩余业务码错误
-        serviceErrorHandler(response);
+        const _response = await serviceErrorHandler(response);
+        // 有特殊情况需要正常返回
+        if (_response) return _response;
       }
       toastHandler && !config.isIgnoreToast && toastHandler(message);
       return Promise.reject(response);
