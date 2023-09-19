@@ -115,8 +115,8 @@ swagger.use(RaceModule, {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | isAllowRace | 是否允许竞态，可以通过request.config设置单个请求 | _boolean_ | `false` |
-| raceKeys | 竞态键值组，键值支持点表示法 | _array&lt;string&gt;_ | `['url']` |
-| racePosition | 竞态位置，指定被取消的请求位置 | _'former' &#124; 'latter'_ | `former` |
+| raceKeys | 竞态键值组，键值支持点表示法，可以通过request.config设置单个请求 | _array&lt;string&gt;_ | `['url']` |
+| racePosition | 竞态位置，指定被取消的请求位置，可以通过request.config设置单个请求 | _'former' &#124; 'latter'_ | `former` |
 
 #### errorModule
 > Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
