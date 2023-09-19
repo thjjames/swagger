@@ -52,7 +52,7 @@ const RaceModule = function(options = {}) {
     config.cancelToken = source.token;
 
     if (requestMap.has(key)) {
-      const cancelMessage = `request ${key} canceled by RaceModule`;
+      const cancelMessage = `request ${key} is canceled by RaceModule`;
       console.warn(cancelMessage);
       if (position === 'former') {
         requestMap.get(key).cancel(cancelMessage);
