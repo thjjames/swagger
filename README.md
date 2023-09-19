@@ -66,6 +66,7 @@ RaceModule.response-interceptor
 #### refreshTokenModule
 ```js
 import { RefreshTokenModule } from 'swagger'
+
 swagger.use(RefreshTokenModule, {
   unauthorizedCode: 401,
   getRefreshToken() {}
@@ -82,10 +83,17 @@ swagger.use(RefreshTokenModule, {
 #### loadingModule
 ```js
 import { LoadingModule } from 'swagger'
+import { Loading } from 'element-ui'
+
+let loadingInstance = {}
 swagger.use(LoadingModule, {
   isShowLoading: true,
-  showLoadingHandler() {},
-  hideLoadingHandler() {}
+  showLoadingHandler: () => {
+    loadingInstance = Loading.service();
+  },
+  hideLoadingHandler: () => {
+    loadingInstance.close();
+  }
 })
 ```
 
@@ -98,6 +106,7 @@ swagger.use(LoadingModule, {
 #### raceModule
 ```js
 import { RaceModule } from 'swagger'
+
 swagger.use(RaceModule, {
   isAllowRace: true
 })
@@ -113,9 +122,13 @@ swagger.use(RaceModule, {
 > Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
 ```js
 import { ErrorModule } from 'swagger'
+import { Message } from 'element-ui'
+
 swagger.use(ErrorModule, {
+  successfulCode: 0,
   unauthorizedCode: 401,
-  unauthorizedHandler() {}
+  unauthorizedHandler() {},
+  toastHandler: Message.error
 })
 ```
 
