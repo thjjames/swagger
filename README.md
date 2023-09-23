@@ -1,5 +1,5 @@
-# SWAGGER
-通用请求库swagger 基于axios@1扩展 使用此库后可以不用安装axios  
+# Swagger
+前端通用请求库swagger 基于axios@1扩展 使用此库后可以不用安装axios  
 ![](https://raw.githubusercontent.com/thjjames/swagger/master/swagger-framework.png)
 
 ## 使用说明
@@ -21,8 +21,23 @@ const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api'
 })
 swagger.use(RefreshTokenModule).use(ErrorModule)
+swagger.$get('/request')
+
+// Vue2
+import Vue from 'vue'
 Vue.prototype.$swagger = swagger
-this.$swagger.$get('/request').then(res => {})
+this.$swagger.$get('/request')
+
+// Vue3
+import { createApp } from 'vue'
+const app = createApp({/* ... */})
+app.config.globalProperties.$swagger = swagger
+this.$swagger.$get('/request')
+
+// React
+import React from 'react'
+React.Component.prototype.$swagger = swagger
+this.$swagger.$get('/request')
 ```
 
 ### 方法
