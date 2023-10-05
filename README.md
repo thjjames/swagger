@@ -31,6 +31,7 @@ this.$swagger.$get('/request')
 // Vue3
 import { createApp } from 'vue'
 const app = createApp({/* ... */})
+app.provide('swagger', swagger)
 app.config.globalProperties.$swagger = swagger
 this.$swagger.$get('/request')
 
