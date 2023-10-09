@@ -1,4 +1,4 @@
-import { CancelToken } from 'axios';
+import { isCancel } from 'axios';
 import { getObjectValueAllowDot } from './utils';
 
 /**
@@ -47,21 +47,20 @@ const RaceModule = function(options = {}) {
   const setRequestMap = config => {
     const key = getRequestKey(config);
     const position = getRacePosition(config);
-    // todo: CancelToken is deprecated since axios v0.22.0, would be replaced with AbortController in future
-    const source = CancelToken.source();
-    config.cancelToken = source.token;
+    const controller = new AbortController();
+    config.signal = controller.signal;
 
     if (requestMap.has(key)) {
       const cancelMessage = `request ${key} is canceled by RaceModule`;
       console.warn(cancelMessage);
       if (position === 'former') {
-        requestMap.get(key).cancel(cancelMessage);
-        requestMap.set(key, source);
+        requestMap.get(key).abort(cancelMessage);
+        requestMap.set(key, controller);
       } else {
-        source.cancel(cancelMessage);
+        controller.abort(cancelMessage);
       }
     } else {
-      requestMap.set(key, source);
+      requestMap.set(key, controller);
     }
   };
   const deleteRequestMap = config => {
@@ -77,7 +76,7 @@ const RaceModule = function(options = {}) {
     }
     return config;
   }, error => {
-    deleteRequestMap(error.config);
+    !isCancel(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
 
@@ -85,7 +84,7 @@ const RaceModule = function(options = {}) {
     deleteRequestMap(response.config);
     return response;
   }, error => {
-    deleteRequestMap(error.config);
+    !isCancel(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
 

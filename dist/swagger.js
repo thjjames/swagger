@@ -308,23 +308,22 @@ const RaceModule = function (options = {}) {
 
   const setRequestMap = config => {
     const key = getRequestKey(config);
-    const position = getRacePosition(config); // todo: CancelToken is deprecated since axios v0.22.0, would be replaced with AbortController in future
-
-    const source = axios__WEBPACK_IMPORTED_MODULE_2__.CancelToken.source();
-    config.cancelToken = source.token;
+    const position = getRacePosition(config);
+    const controller = new AbortController();
+    config.signal = controller.signal;
 
     if (requestMap.has(key)) {
       const cancelMessage = "request ".concat(key, " is canceled by RaceModule");
       console.warn(cancelMessage);
 
       if (position === 'former') {
-        requestMap.get(key).cancel(cancelMessage);
-        requestMap.set(key, source);
+        requestMap.get(key).abort(cancelMessage);
+        requestMap.set(key, controller);
       } else {
-        source.cancel(cancelMessage);
+        controller.abort(cancelMessage);
       }
     } else {
-      requestMap.set(key, source);
+      requestMap.set(key, controller);
     }
   };
 
@@ -341,14 +340,14 @@ const RaceModule = function (options = {}) {
 
     return config;
   }, error => {
-    deleteRequestMap(error.config);
+    !(0,axios__WEBPACK_IMPORTED_MODULE_2__.isCancel)(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
   this.interceptors.response.use(response => {
     deleteRequestMap(response.config);
     return response;
   }, error => {
-    deleteRequestMap(error.config);
+    !(0,axios__WEBPACK_IMPORTED_MODULE_2__.isCancel)(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
   return this;
