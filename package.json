@@ -20,8 +20,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npm run start",
-    "start": "webpack-dev-server",
+    "dev": "webpack-dev-server",
+    "start": "npm run dev",
     "build": "webpack",
     "prepublishOnly": "npm run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
