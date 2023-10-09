@@ -392,8 +392,10 @@ const RefreshTokenModule = function (options = {}) {
     if (token) return token;
 
     if (isInApp) {
+      // eslint-disable-next-line
       token = await $native.getToken().catch((() => void 0));
     } else {
+      // eslint-disable-next-line
       token = await $swagger.getToken().catch((() => void 0));
     }
 
@@ -486,8 +488,7 @@ function registerModule(moduleName) {
   }
 
   this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
-}
-; // 启用点表示法获取对象的值
+} // 启用点表示法获取对象的值
 
 function getObjectValueAllowDot(obj, key) {
   return key.split('.').reduce((acc, cur) => {
@@ -497,8 +498,7 @@ function getObjectValueAllowDot(obj, key) {
   //   obj = obj[array.shift()];
   // }
   // return obj;
-}
-; // 针对responseType: 'blob'失败的情况 判断blob类型是否可以转为对象类型的错误信息
+} // 针对responseType: 'blob'失败的情况 判断blob类型是否可以转为对象类型的错误信息
 
 async function handleErrorBlob(response) {
   const {
@@ -522,7 +522,6 @@ async function handleErrorBlob(response) {
     return response;
   }
 }
-;
 const _toString = Object.prototype.toString;
 
 const isType = function (type) {
@@ -7683,7 +7682,6 @@ class Swagger extends axios__WEBPACK_IMPORTED_MODULE_3__.Axios {
   return instance; */
 });
 
-;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Swagger);
 })();
