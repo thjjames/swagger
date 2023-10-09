@@ -4,7 +4,7 @@ export function registerModule(moduleName) {
     console.warn('any module needs to be registered before ErrorModule, otherwise module like RefreshTokenModule would be invalid!!!');
   }
   this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
-};
+}
 
 // 启用点表示法获取对象的值
 export function getObjectValueAllowDot(obj, key) {
@@ -16,7 +16,7 @@ export function getObjectValueAllowDot(obj, key) {
   //   obj = obj[array.shift()];
   // }
   // return obj;
-};
+}
 
 // 针对responseType: 'blob'失败的情况 判断blob类型是否可以转为对象类型的错误信息
 export async function handleErrorBlob(response) {
@@ -37,13 +37,13 @@ export async function handleErrorBlob(response) {
   } catch (e) {
     return response;
   }
-};
+}
 
 const _toString = Object.prototype.toString;
 const isType = function(type) {
   return function(obj) {
     return _toString.call(obj) === `[object ${type}]`;
-  }
-}
+  };
+};
 export const isObject = isType('Object');
 export const isBlob = isType('Blob');

@@ -1,6 +1,7 @@
-const webpack = require("webpack");
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isDev = !!env.WEBPACK_SERVE;
@@ -37,7 +38,8 @@ module.exports = (env, argv) => {
         ]
       },
       plugins: (isDev ? [
-        new HtmlWebpackPlugin({ template: path.join(__dirname, 'test/index.html') })
+        new HtmlWebpackPlugin({ template: path.join(__dirname, 'test/index.html') }),
+        new ESLintPlugin()
       ] : []).concat([
         new webpack.DefinePlugin({
           noop: () => void 0

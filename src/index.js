@@ -57,7 +57,7 @@ class Swagger extends Axios {
   // static ErrorModule = ErrorModule;
   // static CancelToken = CancelToken;
   // static isCancel = isCancel;
-};
+}
 
 export {
   // Expose Modules

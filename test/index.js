@@ -5,7 +5,7 @@ import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } f
 const swagger = Swagger.create({
   baseURL: '/api'
 });
-let loadingInstance = {}
+let loadingInstance = {};
 swagger.use(RefreshTokenModule).use(LoadingModule, {
   isShowLoading: true,
   showLoadingHandler: () => {

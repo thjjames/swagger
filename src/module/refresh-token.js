@@ -16,8 +16,10 @@ const RefreshTokenModule = function(options = {}) {
     if (token) return token;
 
     if (isInApp) {
+      // eslint-disable-next-line
       token = await $native.getToken().catch(noop);
     } else {
+      // eslint-disable-next-line
       token = await $swagger.getToken().catch(noop);
     }
     return token;
