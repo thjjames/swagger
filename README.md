@@ -120,7 +120,7 @@ swagger.use(LoadingModule, {
 | hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
 #### raceModule
-> Tips: 如果 `raceModule` 开启了全局 `isAllowRace` 配置又存在手动触发取消请求的场景，请单独对此请求配置 `isAllowRace: false`，否则可能会引起不必要的bug ！
+> Tips: 如果 `raceModule` 开启了全局 `isAllowRace` 配置又存在手动触发取消请求的场景，请单独对此请求配置 `isAllowRace: false`，否则可能会引起不必要的bug！
 ```js
 import { RaceModule } from 'swagger'
 
