@@ -79,7 +79,7 @@ RaceModule.response-interceptor
 
 ### 扩展模块
 
-#### refreshTokenModule
+#### RefreshTokenModule
 ```js
 import { RefreshTokenModule } from 'swagger'
 
@@ -96,7 +96,7 @@ swagger.use(RefreshTokenModule, {
 | maxRetryTimes | 最大重试次数 | _number_ | `1` |
 | getRefreshToken | 获取新token方法 | _function():Promise_ | 内置业务方法，一般不通用需要根据实际业务传入 |
 
-#### loadingModule
+#### LoadingModule
 ```js
 import { LoadingModule } from 'swagger'
 import { Loading } from 'element-ui'
@@ -119,8 +119,8 @@ swagger.use(LoadingModule, {
 | showLoadingHandler | 展示加载方法 | _function_ | - |
 | hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
-#### raceModule
-> Tips: 如果 `raceModule` 开启了全局 `isAllowRace` 配置又存在手动触发取消请求的场景，请单独对此请求配置 `isAllowRace: false`，否则可能会引起不必要的bug！
+#### RaceModule
+> 如果 `RaceModule` 开启了全局 `isAllowRace: true` 配置又存在手动触发取消请求的场景，请单独对该请求配置 `isAllowRace: false`，否则可能会引起不必要的bug！
 ```js
 import { RaceModule } from 'swagger'
 
@@ -135,8 +135,8 @@ swagger.use(RaceModule, {
 | raceKeys | 竞态键值组，键值支持点表示法，可以通过request.config设置单个请求 | _array&lt;string&gt;_ | `['url']` |
 | racePosition | 竞态位置，指定被取消的请求位置，可以通过request.config设置单个请求 | _'former' &#124; 'latter'_ | `former` |
 
-#### errorModule
-> Tips: `errorModule` 需要被注册在最后，否则会影响其他模块的使用！
+#### ErrorModule
+> `ErrorModule` 需要被注册在最后，否则会影响其他模块的使用！
 ```js
 import { ErrorModule } from 'swagger'
 import { Message } from 'element-ui'
