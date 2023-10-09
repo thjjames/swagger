@@ -120,7 +120,7 @@ swagger.use(LoadingModule, {
 | hideLoadingHandler | 隐藏加载方法 | _function_ | - |
 
 #### raceModule
-> Tips: 如果RaceModule开启了全局isAllowRace配置又有手动取消请求的场景，请单独对次请求配置 `isAllowRace: false`，否则会引起不必要的bug ！
+> Tips: 如果 `raceModule` 开启了全局 `isAllowRace` 配置又存在手动触发取消请求的场景，请单独对此请求配置 `isAllowRace: false`，否则可能会引起不必要的bug ！
 ```js
 import { RaceModule } from 'swagger'
 
@@ -136,7 +136,7 @@ swagger.use(RaceModule, {
 | racePosition | 竞态位置，指定被取消的请求位置，可以通过request.config设置单个请求 | _'former' &#124; 'latter'_ | `former` |
 
 #### errorModule
-> Tips: errorModule需要被注册在最后，否则会影响其他模块的使用！
+> Tips: `errorModule` 需要被注册在最后，否则会影响其他模块的使用！
 ```js
 import { ErrorModule } from 'swagger'
 import { Message } from 'element-ui'
