@@ -44,10 +44,9 @@ this.$swagger.$get('/request')
 ### 方法
 
 #### create(创建新实例)
-> 所有实例均由静态方法create生成，这里舍弃了`axios(config)`的写法
-
 > 参考 https://github.com/axios/axios#creating-an-instance
 
+所有实例均由静态方法create生成，这里舍弃了`axios(config)`的写法
 ```js
 const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
