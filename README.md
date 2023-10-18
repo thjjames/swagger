@@ -187,7 +187,7 @@ export const CustomizedModule = function(options = {}) {
   })
 }
 
-// axios.js
+// swagger.js
 swagger.use(CustomizedModule)
 ```
 
