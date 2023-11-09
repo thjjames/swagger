@@ -30,13 +30,13 @@
     "*.{js}": "eslint --fix"
   },
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.15.4",
     "axios": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "7.15.8",
     "@babel/plugin-transform-runtime": "7.15.8",
     "@babel/preset-env": "7.15.8",
-    "@babel/runtime-corejs3": "^7.15.4",
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
     "babel-loader": "8.2.3",
