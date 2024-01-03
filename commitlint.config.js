@@ -4,7 +4,6 @@
  * docs: 文档更新
  * feat: 新增功能 示例:git commit -m 'feat: hot' feat冒号后打个空格
  * fix: bug 修复
- * merge: 分支合并 Merge branch ? of ?
  * perf: 性能，体验优化
  * refactor: 重构代码(既没有新增功能，也没有修复bug)
  * revert: 回滚某个更早之前的提交
@@ -25,7 +24,6 @@ module.exports = {
         'docs',
         'feat',
         'fix',
-        'merge',
         'perf',
         'refactor',
         'revert',
