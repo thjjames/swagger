@@ -2,7 +2,7 @@
  * build: 主要目的是修改项目构建系统(例如 gulp，webpack，rollup 的配置等)的提交
  * ci: 主要目的是修改项目继续集成流程(例如 Travis，Jenkins，GitLab CI，Circle 等)的提交
  * docs: 文档更新
- * feat: 新增功能 示例:git commit -m 'feat: hot' feat冒号后打个空格
+ * feat: 新增功能 示例:git commit -m 'feat: hot'
  * fix: bug 修复
  * perf: 性能，体验优化
  * refactor: 重构代码(既没有新增功能，也没有修复bug)
