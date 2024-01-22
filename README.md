@@ -166,29 +166,29 @@ swagger.use(ErrorModule, {
 | statusErrorHandler | 状态错误码处理方法 | _function(response)_ | - |
 | toastHandler | 提示实例方法，可以选择不传由业务触发 | _function_ | - |
 
-#### 自定义模块CustomizedModule
+#### 自定义模块CustomModule
 除了上述提供的通用模块外，也可以在项目中自由定义任何模块 _module_，用以抽离繁复的 _interceptors.request_ 或 _interceptors.response_ 里的逻辑，方式很简单：
 ```js
 // module.js
-export const CustomizedModule = function(options = {}) {
+export const CustomModule = function(options = {}) {
   this.interceptors.request.use(config => {
-    // ur customized code
+    // ur custom code
     return config
   }, error => {
-    // ur customized code
+    // ur custom code
     return Promise.reject(error)
   })
   this.interceptors.response.use(response => {
-    // ur customized code
+    // ur custom code
     return response
   }, error => {
-    // ur customized code
+    // ur custom code
     return Promise.reject(error)
   })
 }
 
 // swagger.js
-swagger.use(CustomizedModule)
+swagger.use(CustomModule)
 ```
 
 ## 请求配置
