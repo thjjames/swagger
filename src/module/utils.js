@@ -1,9 +1,9 @@
-// 注册模块方法名到实例中 用于记录模块是否注册和注册顺序
-export function registerModule(moduleName) {
-  if (moduleName !== 'ErrorModule' && this.defaults._moduleList?.includes('ErrorModule')) {
+// 注册模块方法名到实例中 用于记录模块是否注册和注册选项
+export function registerModule(module, options) {
+  if (module.name !== 'ErrorModule' && this.defaults._moduleMap?.ErrorModule) {
     console.warn('any module needs to be registered before ErrorModule, otherwise module like RefreshTokenModule would be invalid!!!');
   }
-  this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
+  (this.defaults._moduleMap ??= {})[module.name] = options;
 }
 
 // 启用点表示法获取对象的值

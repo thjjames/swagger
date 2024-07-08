@@ -18,7 +18,7 @@ class Swagger extends Axios {
    * @param options
    */
   use(module, options) {
-    registerModule.call(this, module.name);
+    registerModule.call(this, module, options);
     return module.call(this, options);
   }
 
