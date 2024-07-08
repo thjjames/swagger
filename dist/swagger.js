@@ -477,15 +477,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   isObject: () => (/* binding */ isObject),
 /* harmony export */   registerModule: () => (/* binding */ registerModule)
 /* harmony export */ });
-// 注册模块方法名到实例中 用于记录模块是否注册和注册顺序
-function registerModule(moduleName) {
-  var _this$defaults$_modul;
+// 注册模块方法名到实例中 用于记录模块是否注册和注册选项
+function registerModule(module, options) {
+  var _this$defaults$_modul, _this$defaults, _this$defaults$_modul2;
 
-  if (moduleName !== 'ErrorModule' && (_this$defaults$_modul = this.defaults._moduleList) !== null && _this$defaults$_modul !== void 0 && _this$defaults$_modul.includes('ErrorModule')) {
+  if (module.name !== 'ErrorModule' && (_this$defaults$_modul = this.defaults._moduleMap) !== null && _this$defaults$_modul !== void 0 && _this$defaults$_modul.ErrorModule) {
     console.warn('any module needs to be registered before ErrorModule, otherwise module like RefreshTokenModule would be invalid!!!');
   }
 
-  this.defaults._moduleList = [...(this.defaults._moduleList || []), moduleName];
+  ((_this$defaults$_modul2 = (_this$defaults = this.defaults)._moduleMap) !== null && _this$defaults$_modul2 !== void 0 ? _this$defaults$_modul2 : _this$defaults._moduleMap = {})[module.name] = options;
 } // 启用点表示法获取对象的值
 
 function getObjectValueAllowDot(obj, key) {
@@ -7642,7 +7642,7 @@ class Swagger extends axios__WEBPACK_IMPORTED_MODULE_3__.Axios {
    * @param options
    */
   use(module, options) {
-    _module_utils__WEBPACK_IMPORTED_MODULE_2__.registerModule.call(this, module.name);
+    _module_utils__WEBPACK_IMPORTED_MODULE_2__.registerModule.call(this, module, options);
     return module.call(this, options);
   } // Syntactic Sugar
 
