@@ -49,14 +49,14 @@ const ErrorModule = function(options = {}) {
       toastHandler && !config.isIgnoreToast && toastHandler(message);
       return Promise.reject(response);
     }
-  }, error => {
+  }, async error => {
     // 主动取消的接口
     if (isCancel(error)) {
       return Promise.reject(error);
     }
     // 请求失败处理 axios.enhanceError
     const { message, config, response } = error;
-    statusErrorHandler(response);
+    await statusErrorHandler(response);
     // 无需提示信息情况 1未提供提示方法 2配置
     toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
