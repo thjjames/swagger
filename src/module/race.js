@@ -33,15 +33,8 @@ const RaceModule = function(options = {}) {
   const getRequestKey = config => {
     const _raceKeys = getRaceKeys(config);
     return _raceKeys.map(key => {
-      let value = getObjectValueAllowDot(config, key);
-      switch (key) {
-        case 'params':
-        case 'data':
-          // value = qs.stringify(value, { encode: false });
-          value = new URLSearchParams(value).toString();
-          break;
-      }
-      return value;
+      const value = getObjectValueAllowDot(config, key);
+      return JSON.stringify(value);
     }).join('|');
   };
   const setRequestMap = config => {
