@@ -75,8 +75,17 @@ const RefreshTokenModule = function(options = {}) {
     }
   };
 
+  this.interceptors.request.use(config => {
+    // config.data has been changed in transformRequest
+    // see https://github.com/axios/axios/issues/1386
+    config._data = config.data;
+    return config;
+  });
+
   this.interceptors.response.use(response => {
     if (response.data[codeKey] !== unauthorizedCode) return response;
+
+    response.config.data = response.config._data;
     return refreshTokenHandler(response);
   });
 
