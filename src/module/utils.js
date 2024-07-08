@@ -8,7 +8,8 @@ export function registerModule(moduleName) {
 
 // 启用点表示法获取对象的值
 export function getObjectValueAllowDot(obj, key) {
-  return key.split('.').reduce((acc, cur) => {
+  return key.split('.').reduce((acc, cur, index) => {
+    if (~index && cur === 'data') cur = '_data';
     if (acc) return acc[cur];
   }, obj);
   // const array = key.split('.');

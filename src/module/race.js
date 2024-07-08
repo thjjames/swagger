@@ -71,6 +71,10 @@ const RaceModule = function(options = {}) {
   };
 
   this.interceptors.request.use(config => {
+    // config.data has been changed in transformRequest
+    // see https://github.com/axios/axios/issues/1386
+    config._data = config.data;
+
     if (getAllowRace(config)) {
       setRequestMap(config);
     }
