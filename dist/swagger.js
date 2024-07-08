@@ -100,7 +100,7 @@ const ErrorModule = function (options = {}) {
       toastHandler && !config.isIgnoreToast && toastHandler(message);
       return Promise.reject(response);
     }
-  }, error => {
+  }, async error => {
     // 主动取消的接口
     if ((0,axios__WEBPACK_IMPORTED_MODULE_1__.isCancel)(error)) {
       return Promise.reject(error);
@@ -112,7 +112,7 @@ const ErrorModule = function (options = {}) {
       config,
       response
     } = error;
-    statusErrorHandler(response); // 无需提示信息情况 1未提供提示方法 2配置
+    await statusErrorHandler(response); // 无需提示信息情况 1未提供提示方法 2配置
 
     toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
