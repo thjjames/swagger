@@ -245,11 +245,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_url_search_params__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs3/core-js-stable/url-search-params */ "./node_modules/@babel/runtime-corejs3/core-js-stable/url-search-params.js");
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_url_search_params__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_url_search_params__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/module/utils.js");
-
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/module/utils.js");
 
 
 /**
@@ -292,17 +289,8 @@ const RaceModule = function (options = {}) {
     const _raceKeys = getRaceKeys(config);
 
     return _raceKeys.map(key => {
-      let value = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getObjectValueAllowDot)(config, key);
-
-      switch (key) {
-        case 'params':
-        case 'data':
-          // value = qs.stringify(value, { encode: false });
-          value = new (_babel_runtime_corejs3_core_js_stable_url_search_params__WEBPACK_IMPORTED_MODULE_0___default())(value).toString();
-          break;
-      }
-
-      return value;
+      const value = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getObjectValueAllowDot)(config, key);
+      return JSON.stringify(value);
     }).join('|');
   };
 
@@ -334,20 +322,24 @@ const RaceModule = function (options = {}) {
   };
 
   this.interceptors.request.use(config => {
+    // config.data has been changed in transformRequest
+    // see https://github.com/axios/axios/issues/1386
+    config._data = config.data;
+
     if (getAllowRace(config)) {
       setRequestMap(config);
     }
 
     return config;
   }, error => {
-    !(0,axios__WEBPACK_IMPORTED_MODULE_2__.isCancel)(error) && deleteRequestMap(error.config);
+    !(0,axios__WEBPACK_IMPORTED_MODULE_1__.isCancel)(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
   this.interceptors.response.use(response => {
     deleteRequestMap(response.config);
     return response;
   }, error => {
-    !(0,axios__WEBPACK_IMPORTED_MODULE_2__.isCancel)(error) && deleteRequestMap(error.config);
+    !(0,axios__WEBPACK_IMPORTED_MODULE_1__.isCancel)(error) && deleteRequestMap(error.config);
     return Promise.reject(error);
   });
   return this;
@@ -452,8 +444,15 @@ const RefreshTokenModule = function (options = {}) {
     }
   };
 
+  this.interceptors.request.use(config => {
+    // config.data has been changed in transformRequest
+    // see https://github.com/axios/axios/issues/1386
+    config._data = config.data;
+    return config;
+  });
   this.interceptors.response.use(response => {
     if (response.data[codeKey] !== unauthorizedCode) return response;
+    response.config.data = response.config._data;
     return refreshTokenHandler(response);
   });
   return this;
@@ -490,7 +489,8 @@ function registerModule(moduleName) {
 } // 启用点表示法获取对象的值
 
 function getObjectValueAllowDot(obj, key) {
-  return key.split('.').reduce((acc, cur) => {
+  return key.split('.').reduce((acc, cur, index) => {
+    if (~index && cur === 'data') cur = '_data';
     if (acc) return acc[cur];
   }, obj); // const array = key.split('.');
   // while (obj && array.length) {
