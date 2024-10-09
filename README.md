@@ -14,31 +14,31 @@ npm i -S github:thjjames/swagger
 
 ## 基础用法
 ```js
-import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger'
+import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger';
 
 // Swagger.create suggested but not new keyword, cause param defaults would be lost
 const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api'
-})
-swagger.use(RefreshTokenModule).use(ErrorModule)
-swagger.$get('/request')
+});
+swagger.use(RefreshTokenModule).use(ErrorModule);
+swagger.$get('/request');
 
 // Vue2
-import Vue from 'vue'
-Vue.prototype.$swagger = swagger
-this.$swagger.$get('/request')
+import Vue from 'vue';
+Vue.prototype.$swagger = swagger;
+this.$swagger.$get('/request');
 
 // Vue3
-import { createApp } from 'vue'
-const app = createApp({/* ... */})
-app.provide('swagger', swagger)
-app.config.globalProperties.$swagger = swagger
-this.$swagger.$get('/request')
+import { createApp } from 'vue';
+const app = createApp({/* ... */});
+app.provide('swagger', swagger);
+app.config.globalProperties.$swagger = swagger;
+this.$swagger.$get('/request');
 
 // React
-import React from 'react'
-React.Component.prototype.$swagger = swagger
-this.$swagger.$get('/request')
+import React from 'react';
+React.Component.prototype.$swagger = swagger;
+this.$swagger.$get('/request');
 ```
 
 ### 方法
@@ -50,18 +50,18 @@ this.$swagger.$get('/request')
 ```js
 const swagger = Swagger.create({
   baseURL: 'https://getman.cn/api' // 请求基本域名
-})
+});
 ```
 
 #### use(使用扩展模块)
 ```js
-swagger.use(module, options)
+swagger.use(module, options);
 ```
 
 ##### 拦截器执行顺序
 参考 [axios.interceptors.use](https://github.com/axios/axios#multiple-interceptors) 的执行顺序 为反洋葱模型
 ```js
-swagger.use(LoadingModule).use(RaceModule)
+swagger.use(LoadingModule).use(RaceModule);
 ```
 模块中的实际执行顺序为：
 ```
@@ -80,12 +80,12 @@ RaceModule.response-interceptor
 
 #### RefreshTokenModule
 ```js
-import { RefreshTokenModule } from 'swagger'
+import { RefreshTokenModule } from 'swagger';
 
 swagger.use(RefreshTokenModule, {
   unauthorizedCode: 401,
   getRefreshToken() {}
-})
+});
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -97,10 +97,10 @@ swagger.use(RefreshTokenModule, {
 
 #### LoadingModule
 ```js
-import { LoadingModule } from 'swagger'
-import { Loading } from 'element-ui'
+import { LoadingModule } from 'swagger';
+import { Loading } from 'element-ui';
 
-let loadingInstance = {}
+let loadingInstance = {};
 swagger.use(LoadingModule, {
   isShowLoading: true,
   showLoadingHandler: () => {
@@ -109,7 +109,7 @@ swagger.use(LoadingModule, {
   hideLoadingHandler: () => {
     loadingInstance.close();
   }
-})
+});
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -121,11 +121,11 @@ swagger.use(LoadingModule, {
 #### RaceModule
 > 如果 `RaceModule` 开启了全局 `isAllowRace: true` 配置又存在手动触发取消请求的场景，请单独对该请求配置 `isAllowRace: false`，否则可能会引起不必要的bug！
 ```js
-import { RaceModule } from 'swagger'
+import { RaceModule } from 'swagger';
 
 swagger.use(RaceModule, {
   isAllowRace: true
-})
+});
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -137,9 +137,9 @@ swagger.use(RaceModule, {
 #### ErrorModule
 > `ErrorModule` 需要被注册在最后，否则会影响其他模块的使用！
 ```js
-import { ErrorModule } from 'swagger'
-import { Message } from 'element-ui'
-import router from '@/router'
+import { ErrorModule } from 'swagger';
+import { Message } from 'element-ui';
+import router from '@/router';
 
 swagger.use(ErrorModule, {
   successfulCode: 0,
@@ -147,10 +147,10 @@ swagger.use(ErrorModule, {
   forbiddenHandler() {
     setTimeout(() => {
       router.push({ name: '403' });
-    })
+    });
   },
   toastHandler: Message.error
-})
+});
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -173,22 +173,22 @@ swagger.use(ErrorModule, {
 export const CustomModule = function(options = {}) {
   this.interceptors.request.use(config => {
     // ur custom code
-    return config
+    return config;
   }, error => {
     // ur custom code
-    return Promise.reject(error)
-  })
+    return Promise.reject(error);
+  });
   this.interceptors.response.use(response => {
     // ur custom code
-    return response
+    return response;
   }, error => {
     // ur custom code
-    return Promise.reject(error)
-  })
-}
+    return Promise.reject(error);
+  });
+};
 
 // swagger.js
-swagger.use(CustomModule)
+swagger.use(CustomModule);
 ```
 
 ## 请求配置
@@ -229,11 +229,11 @@ axios正常返回数据格式为
 语法糖可以帮助直接返回最里层data数据
 ### $get
 ```js
-this.$swagger.$get(url, config)
+this.$swagger.$get(url, config);
 ```
 ### $post
 ```js
-this.$swagger.$post(url, data, config)
+this.$swagger.$post(url, data, config);
 ```
 
 ## contributor
