@@ -44,7 +44,8 @@ const ErrorModule = function () {
     // 根据后端返回来处理
     const {
       data,
-      config
+      config,
+      request
     } = response;
     const code = data[codeKey];
     const message = data[messageKey];
@@ -65,7 +66,7 @@ const ErrorModule = function () {
         if (_response) return _response;
       }
       toastHandler && !config.isIgnoreToast && toastHandler(message);
-      return Promise.reject(response);
+      return Promise.reject(new axios__WEBPACK_IMPORTED_MODULE_1__.AxiosError(message, 'ERR_ERROR_MODULE', config, request, response));
     }
   }, async error => {
     // 主动取消的接口
@@ -76,9 +77,12 @@ const ErrorModule = function () {
     const {
       message,
       config,
-      response
+      response,
+      status
     } = error;
-    await statusErrorHandler(response);
+    if (status >= 400) {
+      await statusErrorHandler(response);
+    }
     // 无需提示信息情况 1未提供提示方法 2配置
     toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
@@ -5311,7 +5315,7 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CancelToken: () => (/* reexport safe */ axios__WEBPACK_IMPORTED_MODULE_2__.CancelToken),
+/* harmony export */   AxiosError: () => (/* reexport safe */ axios__WEBPACK_IMPORTED_MODULE_2__.AxiosError),
 /* harmony export */   ErrorModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.ErrorModule),
 /* harmony export */   LoadingModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.LoadingModule),
 /* harmony export */   RaceModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.RaceModule),
@@ -5376,16 +5380,15 @@ class Swagger extends axios__WEBPACK_IMPORTED_MODULE_2__.Axios {
   // static LoadingModule = LoadingModule;
   // static RaceModule = RaceModule;
   // static ErrorModule = ErrorModule;
-  // static CancelToken = CancelToken;
   // static isCancel = isCancel;
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Swagger);
-var __webpack_exports__CancelToken = __webpack_exports__.CancelToken;
+var __webpack_exports__AxiosError = __webpack_exports__.AxiosError;
 var __webpack_exports__ErrorModule = __webpack_exports__.ErrorModule;
 var __webpack_exports__LoadingModule = __webpack_exports__.LoadingModule;
 var __webpack_exports__RaceModule = __webpack_exports__.RaceModule;
 var __webpack_exports__RefreshTokenModule = __webpack_exports__.RefreshTokenModule;
 var __webpack_exports__default = __webpack_exports__["default"];
 var __webpack_exports__isCancel = __webpack_exports__.isCancel;
-export { __webpack_exports__CancelToken as CancelToken, __webpack_exports__ErrorModule as ErrorModule, __webpack_exports__LoadingModule as LoadingModule, __webpack_exports__RaceModule as RaceModule, __webpack_exports__RefreshTokenModule as RefreshTokenModule, __webpack_exports__default as default, __webpack_exports__isCancel as isCancel };
+export { __webpack_exports__AxiosError as AxiosError, __webpack_exports__ErrorModule as ErrorModule, __webpack_exports__LoadingModule as LoadingModule, __webpack_exports__RaceModule as RaceModule, __webpack_exports__RefreshTokenModule as RefreshTokenModule, __webpack_exports__default as default, __webpack_exports__isCancel as isCancel };
