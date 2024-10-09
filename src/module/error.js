@@ -57,8 +57,10 @@ const ErrorModule = function(options = {}) {
       return Promise.reject(error);
     }
     // 请求失败处理 axios.enhanceError
-    const { message, config, response } = error;
-    await statusErrorHandler(response);
+    const { message, config, response, status } = error;
+    if (status >= 400) {
+      await statusErrorHandler(response);
+    }
     // 无需提示信息情况 1未提供提示方法 2配置
     toastHandler && !config.isIgnoreToast && toastHandler(message);
     return Promise.reject(error);
