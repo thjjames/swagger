@@ -1,4 +1,4 @@
-import { isCancel } from 'axios';
+import { AxiosError, isCancel } from 'axios';
 import { handleErrorBlob, isObject } from './utils';
 
 /**
@@ -27,7 +27,7 @@ const ErrorModule = function(options = {}) {
     // 处理data为blob类型时的失败情况
     await handleErrorBlob(response);
     // 根据后端返回来处理
-    const { data, config } = response;
+    const { data, config, request } = response;
     const code = data[codeKey];
     const message = data[messageKey];
     // 兼容data为非对象类型时直接返回
@@ -47,7 +47,9 @@ const ErrorModule = function(options = {}) {
         if (_response) return _response;
       }
       toastHandler && !config.isIgnoreToast && toastHandler(message);
-      return Promise.reject(response);
+      return Promise.reject(
+        new AxiosError(message, 'ERR_ERROR_MODULE', config, request, response)
+      );
     }
   }, async error => {
     // 主动取消的接口

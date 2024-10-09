@@ -1,4 +1,4 @@
-import { Axios, mergeConfig, CancelToken, isCancel } from 'axios';
+import { Axios, AxiosError, mergeConfig, isCancel } from 'axios';
 import defaultConfig from 'axios/unsafe/defaults'; // why axios/unsafe/defaults not axios/lib/defaults, see axios/package.json's exports
 import { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from './module';
 import { registerModule, isObject } from './module/utils';
@@ -55,7 +55,6 @@ class Swagger extends Axios {
   // static LoadingModule = LoadingModule;
   // static RaceModule = RaceModule;
   // static ErrorModule = ErrorModule;
-  // static CancelToken = CancelToken;
   // static isCancel = isCancel;
 }
 
@@ -65,8 +64,8 @@ export {
   LoadingModule,
   RaceModule,
   ErrorModule,
-  // Expose CancelToken & isCancel
-  CancelToken,
+  // Expose AxiosError & isCancel
+  AxiosError,
   isCancel
 };
 export default Swagger;
