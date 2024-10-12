@@ -1,5 +1,5 @@
 // 注册模块方法名到实例中 用于记录模块是否注册和注册选项
-export function registerModule(module, options) {
+export function registerModule(module, options = {}) {
   if (module.name !== 'ErrorModule' && this.defaults._moduleMap?.ErrorModule) {
     console.warn('any module needs to be registered before ErrorModule, otherwise module like RefreshTokenModule would be invalid!!!');
   }
