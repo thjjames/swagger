@@ -12,6 +12,91 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/module/cache.js":
+/*!*****************************!*\
+  !*** ./src/module/cache.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/module/utils.js");
+
+
+/**
+ * @param isUseCache 局部变量: 是否使用缓存
+ * @param cacheKeys 全局/局部变量: 缓存配置键值组 每个键值都支持params.id格式
+ * @param cachePeriod 全局/局部变量: 缓存时间 单位: d | h | m
+ */
+const CacheModule = function () {
+  let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  const CACHE_KEYS = ['url'];
+  const {
+    cacheKeys = CACHE_KEYS
+  } = options;
+  const getCacheKeys = config => {
+    const _cacheKeys = config?.cacheKeys || cacheKeys;
+    if (!Array.isArray(_cacheKeys) || _cacheKeys.some(key => typeof key !== 'string')) {
+      console.error('param cacheKeys must be String[]');
+      return CACHE_KEYS;
+    }
+    return _cacheKeys;
+  };
+  const getRequestKey = config => {
+    const _cacheKeys = getCacheKeys(config);
+    return _cacheKeys.map(key => {
+      const value = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getObjectValueAllowDot)(config, key);
+      return JSON.stringify(value);
+    }).join('|');
+  };
+  this.interceptors.request.use(config => {
+    if (config.isUseCache) {
+      const key = getRequestKey(config);
+      let cache;
+      try {
+        cache = JSON.parse(sessionStorage.getItem(key));
+      } catch (e) {
+        return config;
+      }
+      if (cache?.expires > Date.now()) {
+        config.adapter = () => {
+          return Promise.resolve({
+            // _isCached: true,
+            data: cache.data,
+            status: 200,
+            statusText: 'OK',
+            headers: config.headers,
+            config: config,
+            request: {}
+          });
+        };
+      }
+    }
+    return config;
+  });
+  this.interceptors.response.use(response => {
+    const {
+      config,
+      request
+    } = response;
+    if (JSON.stringify(request) !== '{}') {
+      const key = getRequestKey(config);
+      const cache = JSON.stringify({
+        expires: Date.now() + 1000 * 60 * 60 * 24,
+        data: response.data
+      });
+      sessionStorage.setItem(key, cache);
+    }
+    return response;
+  });
+  return this;
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CacheModule);
+
+/***/ }),
+
 /***/ "./src/module/error.js":
 /*!*****************************!*\
   !*** ./src/module/error.js ***!
@@ -113,7 +198,8 @@ const ErrorModule = function () {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ErrorModule: () => (/* reexport safe */ _error__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   CacheModule: () => (/* reexport safe */ _cache__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   ErrorModule: () => (/* reexport safe */ _error__WEBPACK_IMPORTED_MODULE_4__["default"]),
 /* harmony export */   LoadingModule: () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_1__["default"]),
 /* harmony export */   RaceModule: () => (/* reexport safe */ _race__WEBPACK_IMPORTED_MODULE_2__["default"]),
 /* harmony export */   RefreshTokenModule: () => (/* reexport safe */ _refresh_token__WEBPACK_IMPORTED_MODULE_0__["default"])
@@ -121,7 +207,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _refresh_token__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./refresh-token */ "./src/module/refresh-token.js");
 /* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loading */ "./src/module/loading.js");
 /* harmony import */ var _race__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./race */ "./src/module/race.js");
-/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./error */ "./src/module/error.js");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cache */ "./src/module/cache.js");
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./error */ "./src/module/error.js");
+
 
 
 
@@ -418,7 +506,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   registerModule: () => (/* binding */ registerModule)
 /* harmony export */ });
 // 注册模块方法名到实例中 用于记录模块是否注册和注册选项
-function registerModule(module, options) {
+function registerModule(module) {
+  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   if (module.name !== 'ErrorModule' && this.defaults._moduleMap?.ErrorModule) {
     console.warn('any module needs to be registered before ErrorModule, otherwise module like RefreshTokenModule would be invalid!!!');
   }
@@ -5328,6 +5417,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AxiosError: () => (/* reexport safe */ axios__WEBPACK_IMPORTED_MODULE_2__.AxiosError),
+/* harmony export */   CacheModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.CacheModule),
 /* harmony export */   ErrorModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.ErrorModule),
 /* harmony export */   LoadingModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.LoadingModule),
 /* harmony export */   RaceModule: () => (/* reexport safe */ _module__WEBPACK_IMPORTED_MODULE_0__.RaceModule),
@@ -5353,7 +5443,7 @@ class Swagger extends axios__WEBPACK_IMPORTED_MODULE_2__.Axios {
 
   /**
    * use extend module
-   * @param module (RefreshTokenModule | LoadingModule | RaceModule | ErrorModule)
+   * @param module (RefreshTokenModule | LoadingModule | RaceModule | CacheModule | ErrorModule)
    * @param options
    */
   use(module, options) {
@@ -5391,6 +5481,7 @@ class Swagger extends axios__WEBPACK_IMPORTED_MODULE_2__.Axios {
   // static RefreshTokenModule = RefreshTokenModule;
   // static LoadingModule = LoadingModule;
   // static RaceModule = RaceModule;
+  // static CacheModule = CacheModule;
   // static ErrorModule = ErrorModule;
   // static isCancel = isCancel;
 }

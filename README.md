@@ -14,7 +14,7 @@ npm i -S github:thjjames/swagger
 
 ## 基础用法
 ```js
-import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from 'swagger';
+import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, CacheModule, ErrorModule } from 'swagger';
 
 // Swagger.create suggested but not new keyword, cause param defaults would be lost
 const swagger = Swagger.create({
@@ -134,6 +134,19 @@ swagger.use(RaceModule, {
 | raceKeys | 竞态键值组，键值支持点表示法，可以通过request.config设置单个请求 | _array&lt;string&gt;_ | `['url']` |
 | racePosition | 竞态位置，指定被取消的请求位置，可以通过request.config设置单个请求 | _'former' &#124; 'latter'_ | `former` |
 
+
+#### CacheModule
+```js
+import { CacheModule } from 'swagger';
+
+swagger.use(CacheModule);
+```
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| isUseCache | 是否使用缓存，通过request.config设置单个请求 | _boolean_ | `false` |
+| cacheKeys | 缓存键值组，键值支持点表示法，可以通过request.config设置单个请求 | _array&lt;string&gt;_ | `['url']` |
+
 #### ErrorModule
 > `ErrorModule` 需要被注册在最后，否则会影响其他模块的使用！
 ```js
@@ -201,6 +214,8 @@ swagger.use(CustomModule);
 | isAllowRace | 是否允许竞态，可以覆盖raceModule的全局值 | _boolean_ | `false` |
 | raceKeys | 竞态键值组，可以覆盖raceModule的全局值 | _array&lt;string&gt;_ | - |
 | racePosition | 竞态位置，可以覆盖raceModule的全局值 | _'former' &#124; 'latter'_ | - |
+| isUseCache | 是否使用缓存，无全局值，只可单个设置 | _boolean_ | `false` |
+| cacheKeys | 缓存键值组，可以覆盖CacheModule的全局值 | _array&lt;string&gt;_ | - |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
 
 ## 语法糖

@@ -1,27 +1,38 @@
 import Vue from 'vue';
 import { Message, Loading } from 'element-ui';
-import Swagger, { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from '../src';
+import Swagger, {
+  RefreshTokenModule,
+  LoadingModule,
+  RaceModule,
+  CacheModule,
+  ErrorModule
+} from '../src';
 
 const swagger = Swagger.create({
   baseURL: '/api'
 });
 let loadingInstance = {};
-swagger.use(RefreshTokenModule).use(LoadingModule, {
-  isShowLoading: true,
-  showLoadingHandler: () => {
-    loadingInstance = Loading.service();
-  },
-  hideLoadingHandler: () => {
-    loadingInstance.close();
-  }
-}).use(RaceModule, {
-  isAllowRace: true,
-  // racePosition: 'latter',
-}).use(ErrorModule, {
-  codeKey: 'status',
-  // successfulCode: 0,
-  toastHandler: Message.error
-});
+swagger
+  .use(RefreshTokenModule)
+  .use(LoadingModule, {
+    isShowLoading: true,
+    showLoadingHandler: () => {
+      loadingInstance = Loading.service();
+    },
+    hideLoadingHandler: () => {
+      loadingInstance.close();
+    }
+  })
+  .use(RaceModule, {
+    isAllowRace: true,
+    // racePosition: 'latter',
+  })
+  .use(CacheModule)
+  .use(ErrorModule, {
+    codeKey: 'status',
+    // successfulCode: 0,
+    toastHandler: Message.error
+  });
 
 new Vue({
   el: '#app',

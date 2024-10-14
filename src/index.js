@@ -1,6 +1,17 @@
-import { Axios, AxiosError, mergeConfig, isCancel } from 'axios';
+import {
+  Axios,
+  AxiosError,
+  mergeConfig,
+  isCancel
+} from 'axios';
 import defaultConfig from 'axios/unsafe/defaults'; // why axios/unsafe/defaults not axios/lib/defaults, see axios/package.json's exports
-import { RefreshTokenModule, LoadingModule, RaceModule, ErrorModule } from './module';
+import {
+  RefreshTokenModule,
+  LoadingModule,
+  RaceModule,
+  CacheModule,
+  ErrorModule
+} from './module';
 import { registerModule, isObject } from './module/utils';
 
 const getInnerData = res => {
@@ -14,7 +25,7 @@ class Swagger extends Axios {
 
   /**
    * use extend module
-   * @param module (RefreshTokenModule | LoadingModule | RaceModule | ErrorModule)
+   * @param module (RefreshTokenModule | LoadingModule | RaceModule | CacheModule | ErrorModule)
    * @param options
    */
   use(module, options) {
@@ -54,6 +65,7 @@ class Swagger extends Axios {
   // static RefreshTokenModule = RefreshTokenModule;
   // static LoadingModule = LoadingModule;
   // static RaceModule = RaceModule;
+  // static CacheModule = CacheModule;
   // static ErrorModule = ErrorModule;
   // static isCancel = isCancel;
 }
@@ -63,6 +75,7 @@ export {
   RefreshTokenModule,
   LoadingModule,
   RaceModule,
+  CacheModule,
   ErrorModule,
   // Expose AxiosError & isCancel
   AxiosError,
