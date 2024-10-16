@@ -146,6 +146,7 @@ swagger.use(CacheModule);
 | --- | --- | --- | --- |
 | isUseCache | 是否使用缓存，通过request.config设置单个请求 | _boolean_ | `false` |
 | cacheKeys | 缓存键值组，键值支持点表示法，可以通过request.config设置单个请求 | _array&lt;string&gt;_ | `['url']` |
+| cachePeriod | 缓存时间，由最多2位数字和d &#124; h &#124; m组合表示 | _regexp(/^\d{1,2}[dhm]/i)_ | `1d` |
 
 #### ErrorModule
 > `ErrorModule` 需要被注册在最后，否则会影响其他模块的使用！
@@ -216,6 +217,7 @@ swagger.use(CustomModule);
 | racePosition | 竞态位置，可以覆盖raceModule的全局值 | _'former' &#124; 'latter'_ | - |
 | isUseCache | 是否使用缓存，无全局值，只可单个设置 | _boolean_ | `false` |
 | cacheKeys | 缓存键值组，可以覆盖CacheModule的全局值 | _array&lt;string&gt;_ | - |
+| cachePeriod | 缓存时间，可以覆盖CacheModule的全局值 | _regexp(/^\d{1,2}[dhm]/i)_ | - |
 | isIgnoreToast | 是否忽略提示，用来定制toastHandler作用下的特殊情况 | _boolean_ | `false` |
 
 ## 语法糖

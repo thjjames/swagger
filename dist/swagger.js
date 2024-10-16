@@ -33,8 +33,10 @@ __webpack_require__.r(__webpack_exports__);
 const CacheModule = function () {
   let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   const CACHE_KEYS = ['url'];
+  const CACHE_PERIOD = '1d';
   const {
-    cacheKeys = CACHE_KEYS
+    cacheKeys = CACHE_KEYS,
+    cachePeriod = CACHE_PERIOD
   } = options;
   const getCacheKeys = config => {
     const _cacheKeys = config?.cacheKeys || cacheKeys;
@@ -43,6 +45,24 @@ const CacheModule = function () {
       return CACHE_KEYS;
     }
     return _cacheKeys;
+  };
+  const getCachePeriod = config => {
+    let _cachePeriod = config?.cachePeriod || cachePeriod;
+    const reg = /^(\d{1,2})([dhm])$/i;
+    if (!reg.test(_cachePeriod)) {
+      console.error('param cachePeriod is not valid');
+      _cachePeriod = CACHE_PERIOD;
+    }
+    const m = 1e3 * 60;
+    const h = m * 60;
+    const d = h * 24;
+    const cachePeriodMap = {
+      m,
+      h,
+      d
+    };
+    const [, num, unit] = _cachePeriod.match(reg);
+    return num * cachePeriodMap[unit.toLowerCase()];
   };
   const getRequestKey = config => {
     const _cacheKeys = getCacheKeys(config);
@@ -84,7 +104,7 @@ const CacheModule = function () {
     if (JSON.stringify(request) !== '{}') {
       const key = getRequestKey(config);
       const cache = JSON.stringify({
-        expires: Date.now() + 1000 * 60 * 60 * 24,
+        expires: Date.now() + getCachePeriod(config),
         data: response.data
       });
       sessionStorage.setItem(key, cache);
