@@ -1,6 +1,7 @@
 import {
   Axios,
   AxiosError,
+  isAxiosError,
   mergeConfig,
   isCancel
 } from 'axios';
@@ -79,6 +80,7 @@ export {
   ErrorModule,
   // Expose AxiosError & isCancel
   AxiosError,
+  isAxiosError,
   isCancel
 };
 export default Swagger;

@@ -1,3 +1,4 @@
+import { AxiosError, isAxiosError } from 'axios';
 import { getObjectValueAllowDot } from './utils';
 
 /**
@@ -48,40 +49,38 @@ const CacheModule = function(options = {}) {
   this.interceptors.request.use(config => {
     if (config.isUseCache) {
       const key = getRequestKey(config);
+
       let cache;
       try {
         cache = JSON.parse(sessionStorage.getItem(key));
       } catch (e) {
-        return config;
+        console.error(`cache ${key} parsed failed:`, e);
       }
+
       if (cache?.expires > Date.now()) {
-        config.adapter = () => {
-          return Promise.resolve({
-            // _isCached: true,
-            data: cache.data,
-            status: 200,
-            statusText: 'OK',
-            headers: config.headers,
-            config: config,
-            request: {},
-          });
-        };
+        return Promise.reject(
+          new AxiosError('', 'ERR_CACHE_MODULE', config, cache.response.request, cache.response)
+        );
       }
     }
     return config;
   });
 
   this.interceptors.response.use(response => {
-    const { config, request } = response;
-    if (JSON.stringify(request) !== '{}') {
-      const key = getRequestKey(config);
-      const cache = JSON.stringify({
-        expires: Date.now() + getCachePeriod(config),
-        data: response.data
-      });
-      sessionStorage.setItem(key, cache);
-    }
+    const { config } = response;
+    const key = getRequestKey(config);
+    const cache = JSON.stringify({
+      expires: Date.now() + getCachePeriod(config),
+      response,
+    });
+    sessionStorage.setItem(key, cache);
     return response;
+  }, error => {
+    const { response } = error;
+    if (isAxiosError(error) && error.code === 'ERR_CACHE_MODULE') {
+      return Promise.resolve(response);
+    }
+    return Promise.reject(error);
   });
 
   return this;
