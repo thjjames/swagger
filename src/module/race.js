@@ -78,6 +78,7 @@ const RaceModule = function(options = {}) {
   });
 
   this.interceptors.response.use(response => {
+    response.config.data = response.config._data;
     deleteRequestMap(response.config);
     return response;
   }, error => {

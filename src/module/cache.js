@@ -47,6 +47,10 @@ const CacheModule = function(options = {}) {
   };
 
   this.interceptors.request.use(config => {
+    // config.data has been changed in transformRequest
+    // see https://github.com/axios/axios/issues/1386
+    config._data = config.data;
+
     if (config.isUseCache) {
       const key = getRequestKey(config);
 
@@ -68,6 +72,7 @@ const CacheModule = function(options = {}) {
 
   this.interceptors.response.use(response => {
     const { config } = response;
+    config.data = config._data;
     const key = getRequestKey(config);
     const cache = JSON.stringify({
       expires: Date.now() + getCachePeriod(config),
